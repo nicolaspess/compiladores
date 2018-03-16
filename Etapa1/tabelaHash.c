@@ -1,16 +1,26 @@
 // Etapa 1
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
-#include "tabelaHash.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "tabelaHash.h"
 
 void hash_Init(){
-	//implementar
+	int i;
+	
+	for(i=0;i<=SIZE;i++){ Tabela[i] = 0 };
 }
 
 void hash_Print(){
-	//implementar
+	int i;
+	hash_Node *nodo;
+	
+	for(i=0;i<SIZE;i++){
+		for(nodo=Tabela[i]; nodo; nodo = nodo->prox){
+			printf("Tabela[i]: %d , Texto: %s",i,nodo->texto);
+		}
+	}
 }
 
 hash_Node* hash_Find(char* texto){

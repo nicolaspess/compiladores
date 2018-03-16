@@ -57,6 +57,6 @@ int main(int argc, char *argv[]){
             		default:            printf("UNKNOWN - Linha: %d | SIMB. =  %c \n", getLineNumber(),tok); break;
 		}
 	}	
-	//hash_Print();
+	hash_Print();
         exit(0); 
 }

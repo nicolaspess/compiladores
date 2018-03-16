@@ -29,12 +29,12 @@ return {return KW_RETURN;}
 "&&"   {return OPERATOR_AND;}
 "||"   {return OPERATOR_OR;}
 
-[a-zA-Z_][a-zA-Z_0-9]*   {hash_Insert(TOK_IDENTIF, yytext); return TOK_IDENTIF;}
+[a-zA-Z_][a-zA-Z_0-9]*   {hash_Insert(TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
 
-[0-9]+                   {hash_Insert(LIT_INT, yytext); return LIT_INT;}
+[0-9]+                   {hash_Insert(LIT_INTEGER, yytext); return LIT_INTEGER;}
 [0-9]+\.[0-9]+           {hash_Insert(LIT_REAL, yytext); return LIT_REAL;}
 
-\'.\'                    {hash_Insert(LIT_CHARAC, yytext); return LIT_CHARAC;}
+\'.\'                    {hash_Insert(LIT_CHAR, yytext); return LIT_CHAR;}
 \"(\\.|[^"])*\"          {hash_Insert(LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}
@@ -42,7 +42,7 @@ return {return KW_RETURN;}
 [\n]                     {linhaNumero++;}
 "//".*
 "/*"                     {BEGIN(COMMENT);}
-.                        {return ERRO;}
+.                        {return TOKEN_ERROR;}
 
 <COMMENT>"\n"            {linhaNumero++;}
 <COMMENT>"*/"            {BEGIN(INITIAL);}

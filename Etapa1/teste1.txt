@@ -1,0 +1,57 @@
+Daniel
+Nicolas
+
+char  
+int 
+float 
+if
+then   
+else 
+while 
+for
+read  
+print   
+return
+<=
+>=
+==
+!=
+&&
+||
+, 
+;
+:
+(
+)
+[
+]
+{
+} 
++
+-
+*
+/
+<
+>
+=
+!
+&
+$
+#
+@
+
+12
+11.33
+
+/* comentario
+de varias
+linhas*/
+
+//comentario de apenas uma lina
+
+"testando string"
+
+
+
+'a'
+

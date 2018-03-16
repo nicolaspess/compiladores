@@ -62,7 +62,7 @@ int isRunning(){
     return running;
 }
 
-int getlinhaNumero(void){
+int getLineNumber(void){
     return linhaNumero;
 }
 

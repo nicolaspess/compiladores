@@ -49,7 +49,6 @@ return {return KW_RETURN;}
 <COMMENT>.   
 
 %%
-#include "main.c"
 
 int yywrap(){ 
     running = 0;  
@@ -66,13 +65,4 @@ int isRunning(){
 
 int getLineNumber(void){
     return linhaNumero;
-}
-
-FILE* file(char* filename){
-    yyin = fopen(filename,"r");
-    return yyin;
-}
-
-int simboloASCII(){
-    return yytext[0];
 }

@@ -34,7 +34,7 @@ return {return KW_RETURN;}
 [0-9]+                   {hash_Insert(LIT_INTEGER, yytext); return LIT_INTEGER;}
 [0-9]+\.[0-9]+           {hash_Insert(LIT_REAL, yytext); return LIT_REAL;}
 
-\'.\'                    {hash_Insert(LIT_CHAR, yytext); return LIT_CHAR;}
+'[a-zA-Z]'               {hash_Insert(LIT_CHAR, yytext); return LIT_CHAR;}
 \"(\\.|[^"])*\"          {hash_Insert(LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}

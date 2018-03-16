@@ -8,12 +8,12 @@ typedef struct hash
 	int tipo;
 	char* texto;
 	struct hash *prox; 
-}hashNode;
+}hash_Node;
 
-hashNode* Tabela[SIZE];
+hash_Node* Tabela[SIZE];
 
-void hashInit();
-void hashPrint();
-hashNode* hashInsert(int tipo, char* texto);
-hashNode* hashFind(char* texto);
-int hashAddress(char* texto);
+void hash_Init();
+void hash_Print();
+hash_Node* hash_Insert(int tipo, char* texto);
+hash_Node* hash_Find(char* texto);
+int hash_Address(char* texto);

@@ -43,11 +43,11 @@ $
 17
 27.45
 
+//comentario de apenas uma lina
+
 /* comentario
 de varias
 linhas*/
-
-//comentario de apenas uma lina
 
 "testando string"
 

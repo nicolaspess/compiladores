@@ -29,22 +29,23 @@ return {return KW_RETURN;}
 "&&"   {return OPERATOR_AND;}
 "||"   {return OPERATOR_OR;}
 
-[a-zA-Z_][a-zA-Z_0-9]* {hash_Insert(TOK_IDENTIF, yytext); return TOK_IDENTIF;}
+[a-zA-Z_][a-zA-Z_0-9]*   {hash_Insert(TOK_IDENTIF, yytext); return TOK_IDENTIF;}
 
-[0-9]+                 {hash_Insert(LIT_INT, yytext); return LIT_INT;}
-[0-9]+\.[0-9]+         {hash_Insert(LIT_REAL, yytext); return LIT_REAL;}
-\'.\'                  {hash_Insert(LIT_CHARAC, yytext); return LIT_CHARAC;}
-\"(\\.|[^"])*\"        {hash_Insert(LIT_STRING, yytext); return LIT_STRING;}
+[0-9]+                   {hash_Insert(LIT_INT, yytext); return LIT_INT;}
+[0-9]+\.[0-9]+           {hash_Insert(LIT_REAL, yytext); return LIT_REAL;}
+
+\'.\'                    {hash_Insert(LIT_CHARAC, yytext); return LIT_CHARAC;}
+\"(\\.|[^"])*\"          {hash_Insert(LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}
 [ \t] 
-[\n]                   {linhaNumero++;}
+[\n]                     {linhaNumero++;}
 "//".*
-"/*"                   {BEGIN(COMMENT);}
-.                      {return ERRO;}
+"/*"                     {BEGIN(COMMENT);}
+.                        {return ERRO;}
 
-<COMMENT>"*/" {BEGIN(INITIAL);}
-<COMMENT>"\n" {linhaNumero++;}
+<COMMENT>"\n"            {linhaNumero++;}
+<COMMENT>"*/"            {BEGIN(INITIAL);}
 <COMMENT>.   
 
 %%

@@ -13,11 +13,11 @@ void hash_Print(){
 	//implementar
 }
 
-hash_Node* hashFind(char* texto){
+hash_Node* hash_Find(char* texto){
 	//implementar
 }
 
-hash_Node* hashInsert(int tipo, char* texto){
+hash_Node* hash_Insert(int tipo, char* texto){
 	//implementar
 }
 

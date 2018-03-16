@@ -49,6 +49,7 @@ return {return KW_RETURN;}
 <COMMENT>.   
 
 %%
+#include "main.c"
 
 int yywrap(){ 
     running = 0;  

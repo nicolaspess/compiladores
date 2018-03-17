@@ -1,8 +1,10 @@
 %{
+
 #include "tokens.h"
 #include "tabelaHash.h"
 int running = 1;  
 int linhaNumero = 1;    
+
 %}
 
 %x COMMENT
@@ -35,8 +37,9 @@ return {return KW_RETURN;}
 \".*\"                   {hash_Insert(LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}
-[ \t] 
 [\n]                     {linhaNumero++;}
+[ \t\r]+
+
 "//".*
 "/*"                     {BEGIN(COMMENT);}
 .                        {return TOKEN_ERROR;}

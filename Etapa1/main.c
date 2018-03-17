@@ -2,7 +2,6 @@
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
 
 #include <stdio.h>
-#include <stdin.h>
 #include <stdlib.h>
 #include "tokens.h"
 

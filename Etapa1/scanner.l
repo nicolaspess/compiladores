@@ -1,6 +1,3 @@
-// Etapa 1
-// Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
-
 %{
 #include "tokens.h"
 #include "tabelaHash.h"

@@ -49,9 +49,9 @@ $
 de varias
 linhas*/
 
-"testando string"
+"testando string" "alguma coisa"
 
 
 
-'a'
+'a' 'b'
 

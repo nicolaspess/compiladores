@@ -16,7 +16,7 @@ int main(int argc, char *argv[]){
 	int tok;
 	FILE* file;
 	
-	if (!(file = fopen("teste1.txt", "r"))) {
+	if (!(file = fopen("teste2.txt", "r"))) {
 		printf ("Erro em arq!");
 	}
 	

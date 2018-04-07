@@ -18,7 +18,7 @@ void hash_Print(){
 	
 	for(i=0;i<SIZE;i++){
 		for(nodo=Tabela[i]; nodo; nodo = nodo->prox){
-			printf("Tabela[i]: %d , Texto: %s",i,nodo->texto);
+			printf("Tabela[i]: %d , Texto: %s \n",i,nodo->texto);
 		}
 	}
 }

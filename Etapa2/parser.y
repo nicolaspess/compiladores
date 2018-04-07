@@ -4,32 +4,33 @@
 extern int getLineNumber();
 %}
 
-%tok KW_CHAR       256
-%tok KW_INT        257
-%tok KW_FLOAT      258
-%tok KW_IF         259
-%tok KW_THEN       260
-%tok KW_ELSE       261
-%tok KW_WHILE      262
-%tok KW_FOR        263
-%tok KW_READ       264
-%tok KW_PRINT      265
-%tok KW_RETURN     266
+%token KW_CHAR       256
+%token KW_INT        257
+%token KW_FLOAT      258
+%token KW_IF         259
+%token KW_THEN       260
+%token KW_ELSE       261
+%token KW_WHILE      262
+%token KW_FOR        263
+%token KW_READ       264
+%token KW_PRINT      265
+%token KW_RETURN     266
+%token KW_TO         267
 
-%tok OPERATOR_LE   270
-%tok OPERATOR_GE   271
-%tok OPERATOR_EQ   272
-%tok OPERATOR_NE   273
-%tok OPERATOR_AND  274
-%tok OPERATOR_OR   275
+%token OPERATOR_LE   270
+%token OPERATOR_GE   271
+%token OPERATOR_EQ   272
+%token OPERATOR_NE   273
+%token OPERATOR_AND  274
+%token OPERATOR_OR   275
 
-%tok TK_IDENTIFIER 280
-%tok LIT_INTEGER   281
-%tok LIT_REAL      282
-%tok LIT_CHAR      283
-%tok LIT_STRING    284
+%token TK_IDENTIFIER 280
+%token LIT_INTEGER   281
+%token LIT_REAL      282
+%token LIT_CHAR      283
+%token LIT_STRING    284
 
-%tok TOKEN_ERROR   290
+%token TOKEN_ERROR   290
 
 %left '<' '>'  
 %left '!' OPERATOR_LE OPERATOR_GE OPERATOR_EQ OPERATOR_NE OPERATOR_AND OPERATOR_OR
@@ -46,7 +47,8 @@ listaDeDeclaracoes : declaracoes listaDeDeclaracoes
 
 declaracoes : tipo TK_IDENTIFIER '=' literal ';'
             | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicializacao ';'
-            | '#' TK_IDENTIFIER ';'
+            | tipo '#' TK_IDENTIFIER ';'
+            | tipo '#' TK_IDENTIFIER '=' literal ';'
             | tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco			
 			;	   
 
@@ -91,19 +93,54 @@ fimDeComando : ';' comando fimDeComando
              |
              ;
 
-comando : TK_IDENTIFIER '=' expressao
-        | //continuar
+comando : TK_IDENTIFIER '=' expressao ';'
+        | controleFluxo
+        | KW_PRINT argprint
+        | KW_READ TK_IDENTIFIER
+        | bloco
+        | KW_RETURN expressao
+        | ';'
+        |
         ;
 
-expressao : TK_IDENTIFIER 
-          | //continuar		
+argprint : LIT_STRING argprint
+         | argprint LIT_STRING
+         | LIT_STRING
+         | expressao
+         ;
+
+expressao : TK_IDENTIFIER
+          | '#' TK_IDENTIFIER
+          | OPERATOR_AND TK_IDENTIFIER
+          | TK_IDENTIFIER '[' expressao ']'
+          | TK_IDENTIFIER '(' listaDeParametros ')'
+          | '(' expressao ')' 
+          | expressao op expressao
+          | LIT_CHAR
+          | LIT_INTEGER
+          | LIT_STRING
           ;	   
+
+op : OPERATOR_LE
+   | OPERATOR_GE
+   | OPERATOR_EQ
+   | OPERATOR_NE
+   | OPERATOR_AND
+   | OPERATOR_OR
+   | '>'
+   | '<'
+   | '+'
+   | '-'
+   | '/'
+   | '*'
+   | '%'
+   | '!'
+   ;
 			   
-			   
-controleFluxo : KW_IF '('exp')' comando
-              | KW_IF '('exp')' comando KW_ELSE comando
-              | KW_WHILE '('exp ')' comando
-              | KW_FOR //continuar
+controleFluxo : KW_IF '('expressao')' comando
+              | KW_IF '('expressao')' comando KW_ELSE comando
+              | KW_WHILE '('expressao ')' comando
+              | KW_FOR '(' TK_IDENTIFIER '=' expressao KW_TO expressao ')' comando
 	          ;
 
 	

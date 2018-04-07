@@ -42,7 +42,7 @@ return {return KW_RETURN;}
 [0-9]+\.[0-9]+           {hash_Insert(SYMBOL_LIT_REAL, yytext); return LIT_REAL;}
 
 '[a-zA-Z]'               {hash_Insert(SYMBOL_LIT_CHAR, yytext); return LIT_CHAR;}
-\".*\"                   {hash_Insert(SYMBOL_LIT_STRING, yytext); return LIT_STRING;}
+\"[^\"\n]*\"             {hash_Insert(SYMBOL_LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}
 [\n]                     {linhaNumero++;}

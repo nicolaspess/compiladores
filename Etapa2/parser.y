@@ -6,16 +6,16 @@ extern int getLineNumber();
 
 %token KW_CHAR       256
 %token KW_INT        257
-%token KW_FLOAT      258
-%token KW_IF         259
-%token KW_THEN       260
-%token KW_ELSE       261
-%token KW_WHILE      262
-%token KW_FOR        263
-%token KW_READ       264
-%token KW_PRINT      265
-%token KW_RETURN     266
-%token KW_TO         267
+%token KW_FLOAT      259
+%token KW_IF         261
+%token KW_THEN       262
+%token KW_ELSE       263
+%token KW_WHILE      264
+%token KW_FOR        265
+%token KW_READ       266
+%token KW_PRINT      267
+%token KW_RETURN     268
+%token KW_TO         269
 
 %token OPERATOR_LE   270
 %token OPERATOR_GE   271
@@ -93,15 +93,19 @@ fimDeComando : ';' comando fimDeComando
              |
              ;
 
-comando : TK_IDENTIFIER '=' expressao ';'
+comando : atribuicao
         | controleFluxo
         | KW_PRINT argprint
         | KW_READ TK_IDENTIFIER
         | bloco
         | KW_RETURN expressao
-        | ';'
         |
         ;
+
+atribuicao : TK_IDENTIFIER '=' expressao
+           | '#' TK_IDENTIFIER '=' expressao
+           | OPERATOR_AND TK_IDENTIFIER '=' expressao
+           | TK_IDENTIFIER '[' expressao ']' '=' expressao
 
 argprint : LIT_STRING argprint
          | argprint LIT_STRING
@@ -109,11 +113,23 @@ argprint : LIT_STRING argprint
          | expressao
          ;
 
+listaDeArgumentos : argfunc fimDeArgumentos
+                  | 
+                  ;
+
+fimDeArgumentos : ',' argfunc fimDeArgumentos 
+                |
+                ;
+
+argfunc: expressao
+       |
+       ;
+ 
 expressao : TK_IDENTIFIER
           | '#' TK_IDENTIFIER
-          | OPERATOR_AND TK_IDENTIFIER
+          | '&' TK_IDENTIFIER
           | TK_IDENTIFIER '[' expressao ']'
-          | TK_IDENTIFIER '(' listaDeParametros ')'
+          | TK_IDENTIFIER '(' listaDeArgumentos ')'
           | '(' expressao ')' 
           | expressao op expressao
           | LIT_CHAR
@@ -137,10 +153,10 @@ op : OPERATOR_LE
    | '!'
    ;
 			   
-controleFluxo : KW_IF '('expressao')' comando
-              | KW_IF '('expressao')' comando KW_ELSE comando
+controleFluxo : KW_IF '('expressao')' KW_THEN comando
+              | KW_IF '('expressao')' KW_THEN comando KW_ELSE comando
               | KW_WHILE '('expressao ')' comando
-              | KW_FOR '(' TK_IDENTIFIER '=' expressao KW_TO expressao ')' comando
+              | KW_FOR '(' atribuicao KW_TO expressao ')' comando
 	          ;
 
 	

@@ -98,7 +98,7 @@
   75  controleFluxo : KW_IF '(' expressao ')' KW_THEN comando
   76                | KW_IF '(' expressao ')' KW_THEN comando KW_ELSE comando
   77                | KW_WHILE '(' expressao ')' comando
-  78                | KW_FOR '(' atribuicao 't' expressao ')' comando
+  78                | KW_FOR '(' atribuicao KW_TO expressao ')' comando
 
 state 0
 	$accept : . programa $end  (0)
@@ -488,7 +488,7 @@ state 43
 
 
 state 44
-	controleFluxo : KW_FOR . '(' atribuicao 't' expressao ')' comando  (78)
+	controleFluxo : KW_FOR . '(' atribuicao KW_TO expressao ')' comando  (78)
 
 	'('  shift 60
 	.  error
@@ -634,7 +634,7 @@ state 59
 
 
 state 60
-	controleFluxo : KW_FOR '(' . atribuicao 't' expressao ')' comando  (78)
+	controleFluxo : KW_FOR '(' . atribuicao KW_TO expressao ')' comando  (78)
 
 	OPERATOR_AND  shift 48
 	TK_IDENTIFIER  shift 49
@@ -658,6 +658,7 @@ state 62
 	'['  shift 83
 	'('  shift 84
 	KW_ELSE  reduce 51
+	KW_TO  reduce 51
 	OPERATOR_LE  reduce 51
 	OPERATOR_GE  reduce 51
 	OPERATOR_EQ  reduce 51
@@ -678,7 +679,6 @@ state 62
 	','  reduce 51
 	'}'  reduce 51
 	'%'  reduce 51
-	't'  reduce 51
 
 
 state 63
@@ -957,9 +957,9 @@ state 81
 
 
 state 82
-	controleFluxo : KW_FOR '(' atribuicao . 't' expressao ')' comando  (78)
+	controleFluxo : KW_FOR '(' atribuicao . KW_TO expressao ')' comando  (78)
 
-	't'  shift 112
+	KW_TO  shift 112
 	.  error
 
 
@@ -1185,9 +1185,9 @@ state 106
 	'/'  shift 102
 	'%'  shift 103
 	KW_ELSE  reduce 37
+	KW_TO  reduce 37
 	';'  reduce 37
 	'}'  reduce 37
-	't'  reduce 37
 
 	op  goto 104
 
@@ -1274,7 +1274,7 @@ state 111
 
 
 state 112
-	controleFluxo : KW_FOR '(' atribuicao 't' . expressao ')' comando  (78)
+	controleFluxo : KW_FOR '(' atribuicao KW_TO . expressao ')' comando  (78)
 
 	TK_IDENTIFIER  shift 62
 	LIT_INTEGER  shift 63
@@ -1392,13 +1392,13 @@ state 118
 	'/'  shift 102
 	'%'  shift 103
 	KW_ELSE  reduce 57
+	KW_TO  reduce 57
 	LIT_STRING  reduce 57
 	';'  reduce 57
 	']'  reduce 57
 	')'  reduce 57
 	','  reduce 57
 	'}'  reduce 57
-	't'  reduce 57
 
 	op  goto 104
 
@@ -1422,9 +1422,9 @@ state 119
 	'/'  shift 102
 	'%'  shift 103
 	KW_ELSE  reduce 39
+	KW_TO  reduce 39
 	';'  reduce 39
 	'}'  reduce 39
-	't'  reduce 39
 
 	op  goto 104
 
@@ -1455,9 +1455,9 @@ state 121
 	'/'  shift 102
 	'%'  shift 103
 	KW_ELSE  reduce 38
+	KW_TO  reduce 38
 	';'  reduce 38
 	'}'  reduce 38
-	't'  reduce 38
 
 	op  goto 104
 
@@ -1501,7 +1501,7 @@ state 124
 
 state 125
 	expressao : expressao . op expressao  (57)
-	controleFluxo : KW_FOR '(' atribuicao 't' expressao . ')' comando  (78)
+	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao . ')' comando  (78)
 
 	OPERATOR_LE  shift 90
 	OPERATOR_GE  shift 91
@@ -1585,7 +1585,7 @@ state 131
 
 
 state 132
-	controleFluxo : KW_FOR '(' atribuicao 't' expressao ')' . comando  (78)
+	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao ')' . comando  (78)
 	comando : .  (36)
 
 	KW_IF  shift 42
@@ -1637,9 +1637,9 @@ state 134
 	'/'  shift 102
 	'%'  shift 103
 	KW_ELSE  reduce 40
+	KW_TO  reduce 40
 	';'  reduce 40
 	'}'  reduce 40
-	't'  reduce 40
 
 	op  goto 104
 
@@ -1669,7 +1669,7 @@ state 135
 
 
 state 136
-	controleFluxo : KW_FOR '(' atribuicao 't' expressao ')' comando .  (78)
+	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao ')' comando .  (78)
 
 	.  reduce 78
 
@@ -1694,5 +1694,5 @@ State 118 contains 14 shift/reduce conflicts.
 State 131 contains 1 shift/reduce conflict.
 
 
-47 terminals, 23 nonterminals
+46 terminals, 23 nonterminals
 79 grammar rules, 139 states

@@ -10,7 +10,9 @@ int linhaNumero = 1;
 #define SYMBOL_LIT_STRING 4
 #define SYMBOL_TK_IDENTIFIER 5
 
+#include "ast.h"
 #include "y.tab.h"
+#include "tabelaHash.c"
 
 
 %}

@@ -17,6 +17,33 @@
 #define AST_IFTE 10
 #define AST_WHILE 11
 #define AST_FOR 12
+#define AST_BLOCO 13
+#define AST_NOT 14
+#define AST_KWPRINT 15
+#define AST_KWREAD 16
+#define AST_KWRETURN 17
+#define AST_PT1 18
+#define AST_ARR 19
+#define AST_FUNCALL 20
+#define AST_ARGFUN 21
+#define AST_EXP 22
+#define AST_ASSPT1 23
+#define AST_ASSPT2 24
+#define AST_ASSARR 25
+#define AST_KWCHAR 26
+#define AST_KWINT 27
+#define AST_KWFLOAT 28
+#define AST_LDEC 29
+#define AST_DEC 30
+#define AST_DECPT 31
+#define AST_DECARR 32
+#define AST_DECFUN 33
+#define AST_PRINTARG 34
+#define AST_PARAM 35
+#define AST_INI 36
+#define AST_INI2 37
+
+FILE * source_code;
 
 typedef struct ast_node
 {
@@ -27,5 +54,9 @@ typedef struct ast_node
 
 AST* astCreate(int type, hash_Node *symbol, AST *son0, AST *son1, AST *son2, AST *son3);
 void astPrint(AST *node, int level);
+
+void printSource(AST *raiz);
+void printNodeSource(AST *node, FILE *source_code);
+
 
 #endif

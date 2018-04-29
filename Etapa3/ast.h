@@ -42,6 +42,19 @@
 #define AST_PARAM 35
 #define AST_INI 36
 #define AST_INI2 37
+#define AST_LE 38
+#define AST_GE 39
+#define AST_EQ 40
+#define AST_NE 41
+#define AST_AND 42
+#define AST_OR 43
+#define AST_ARGFUNFIM 44
+#define AST_IFT 45
+#define AST_BLOCOCMD 46
+#define AST_FIMCMD 47
+#define AST_DECPTASS 48
+#define AST_LPARAM 49
+#define AST_FPARAM 50
 
 FILE * source_code;
 

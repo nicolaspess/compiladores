@@ -49,11 +49,11 @@ extern int getLineNumber();
 %type <ast> controleFluxo
 %type <ast> atribuicao
 %type <ast> argprint
+%type <ast> argprint2
 %type <ast> expressao
 %type <ast> listaDeArgumentos
 %type <ast> fimDeArgumentos
 %type <ast> argfunc
-%type <ast> litprint
 
 %left '+' '-' '*' '/' '%' '!' '<' '>'
 %left OPERATOR_LE OPERATOR_GE OPERATOR_NE OPERATOR_AND OPERATOR_OR OPERATOR_EQ
@@ -70,7 +70,7 @@ listaDeDeclaracoes : declaracoes listaDeDeclaracoes { $$ = astCreate(AST_LDEC, 0
 
 declaracoes : tipo TK_IDENTIFIER '=' literal ';'                        { $$ = astCreate(AST_DEC, $2, $1, $4, 0, 0); }
             | tipo '#' TK_IDENTIFIER ';'                                { $$ = astCreate(AST_DECPT, $3, $1, 0, 0, 0); }
-            | tipo '#' TK_IDENTIFIER '=' literal ';'                    { $$ = astCreate(AST_DECPT, $3, $1, $5, 0, 0); }
+            | tipo '#' TK_IDENTIFIER '=' literal ';'                    { $$ = astCreate(AST_DECPTASS, $3, $1, $5, 0, 0); }
             | tipo TK_IDENTIFIER '[' lit ']' inicializacao ';'          { $$ = astCreate(AST_DECARR, $2, $1, $4, $6, 0); }
             | tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco        { $$ = astCreate(AST_DECFUN, $2, $1, $4, $6, 0); }
             ;
@@ -97,10 +97,10 @@ inicializacao2 : literal inicializacao2   { $$ = astCreate(AST_INI2, 0, $1, $2, 
                | { $$ = 0; }
                ;
 
-listaDeParametros : parametro fimDeParametros                 
+listaDeParametros : parametro fimDeParametros  { $$ = astCreate(AST_LPARAM, 0, $1, $2, 0, 0); }                
                 ;
 
-fimDeParametros : ',' parametro fimDeParametros 
+fimDeParametros : ',' parametro fimDeParametros { $$ = astCreate(AST_FPARAM, 0, $1, $2, 0, 0); }
                 | { $$ = 0; }
                 ;
 
@@ -127,7 +127,7 @@ comando : bloco                   { $$ = $1 }
         | { $$ = 0; }
         ;
 
-controleFluxo : KW_IF '('expressao')' KW_THEN comando                   { $$ = astCreate(AST_IFTE, 0, $3, $5, 0, 0); }
+controleFluxo : KW_IF '('expressao')' KW_THEN comando                   { $$ = astCreate(AST_IFT, 0, $3, $5, 0, 0); }
               | KW_WHILE '('expressao ')' comando                       { $$ = astCreate(AST_WHILE, 0, $3, $5, 0, 0); }
               | KW_FOR '(' atribuicao KW_TO expressao ')' comando       { $$ = astCreate(AST_FOR, 0, $3, $5, $7, 0); }
               | KW_IF '('expressao')' KW_THEN comando KW_ELSE comando 	{ $$ = astCreate(AST_IFTE, 0, $3, $5, $7, 0); }         
@@ -139,12 +139,12 @@ atribuicao : TK_IDENTIFIER '=' expressao                    { $$ = astCreate(AST
            | TK_IDENTIFIER '[' expressao ']' '=' expressao  { $$ = astCreate(AST_ASSARR, $1, $3, $6, 0, 0); }
            ;
 
-argprint : litprint argprint  { $$ = astCreate(AST_PRINTARG, 0, $1, $2, 0, 0); }
-         | LIT_STRING         { $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }
+argprint : expressao argprint2  { $$ = astCreate(AST_PRINTARG, 0, $1, $2, 0, 0); }
          ;
 
-litprint: LIT_STRING  { $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }
-        ;
+argprint2: expressao argprint2  { $$ = astCreate(AST_PRINTARG, 0, $1, $2, 0, 0); }
+         |
+         ;
 
 expressao : TK_IDENTIFIER                           { $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }
           | '#' TK_IDENTIFIER                       { $$ = astCreate(AST_PT1, $2, 0, 0, 0, 0); }
@@ -161,18 +161,18 @@ expressao : TK_IDENTIFIER                           { $$ = astCreate(AST_SYMBOL,
           | expressao '<' expressao                 { $$ = astCreate(AST_LESS, 0, $1, $3, 0, 0); }
           | '!' expressao                           { $$ = astCreate(AST_NOT, 0, $2, 0, 0, 0); }
           | expressao OPERATOR_LE expressao         { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
-          | expressao OPERATOR_GE expressao         { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
-          | expressao OPERATOR_EQ expressao         { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
-          | expressao OPERATOR_NE expressao         { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
-          | expressao OPERATOR_AND expressao        { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
-          | expressao OPERATOR_OR expressao         { $$ = astCreate(AST_LE, 0, $1, $3, 0, 0); }
+          | expressao OPERATOR_GE expressao         { $$ = astCreate(AST_GE, 0, $1, $3, 0, 0); }
+          | expressao OPERATOR_EQ expressao         { $$ = astCreate(AST_EQ, 0, $1, $3, 0, 0); }
+          | expressao OPERATOR_NE expressao         { $$ = astCreate(AST_NE, 0, $1, $3, 0, 0); }
+          | expressao OPERATOR_AND expressao        { $$ = astCreate(AST_AND, 0, $1, $3, 0, 0); }
+          | expressao OPERATOR_OR expressao         { $$ = astCreate(AST_OR, 0, $1, $3, 0, 0); }
           | TK_IDENTIFIER '(' listaDeArgumentos ')' { $$ = astCreate(AST_FUNCALL, $1, $3, 0, 0, 0); }
           ;
 
 listaDeArgumentos : argfunc fimDeArgumentos     { $$ = astCreate(AST_ARGFUN, 0, $1, $2, 0, 0);}
                   ;
 
-fimDeArgumentos : ',' argfunc fimDeArgumentos   { $$ = astCreate(AST_ARGFUN, 0, $2, $3, 0, 0); }
+fimDeArgumentos : ',' argfunc fimDeArgumentos   { $$ = astCreate(AST_ARGFUNFIM, 0, $2, $3, 0, 0); }
                 | { $$ = 0; }
                 ;
 

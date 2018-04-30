@@ -1,4 +1,6 @@
 #include "ast.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 AST* astCreate(int type, hash_Node *symbol, AST *son0, AST *son1, AST *son2, AST *son3){
 	
@@ -66,12 +68,12 @@ void astPrint(AST *node, int level){
 		case AST_PARAM: fprintf(stderr, "AST_PARAM, \n");break;
 		case AST_INI: fprintf(stderr, "AST_INI, \n");break;
 		case AST_INI2: fprintf(stderr, "AST_INI2, \n");break;
-		case AST_LE: fprintf(stderr, "AST_LE, \n", );break;
-		case AST_GE: fprintf(stderr, "AST_GE, \n", );break;
-		case AST_EQ: fprintf(stderr, "AST_EQ, \n", );break;
-		case AST_NE: fprintf(stderr, "AST_NE, \n", );break;
-		case AST_AND: fprintf(stderr, "AST_AND, \n", );break;
-		case AST_OR: fprintf(stderr, "AST_OR, \n", );break;
+		case AST_LE: fprintf(stderr, "AST_LE, \n" );break;
+		case AST_GE: fprintf(stderr, "AST_GE, \n" );break;
+		case AST_EQ: fprintf(stderr, "AST_EQ, \n" );break;
+		case AST_NE: fprintf(stderr, "AST_NE, \n" );break;
+		case AST_AND: fprintf(stderr, "AST_AND, \n" );break;
+		case AST_OR: fprintf(stderr, "AST_OR, \n" );break;
 		default: fprintf(stderr, "UNKNOWN, \n");break;
 	}
 	for (i=0; i<MAX_SONS; i++)
@@ -80,9 +82,9 @@ void astPrint(AST *node, int level){
 
 void printSource(AST *raiz){
 
-	printNodeSource(AST *node, FILE *source_code){
+   //printNodeSource(AST *node, FILE *source_code);
 
-	}
+	
 }
 
 void printNodeSource(AST *node, FILE *source_code){
@@ -271,7 +273,7 @@ void printNodeSource(AST *node, FILE *source_code){
 			break;
 
 			case AST_ARGFUN: 
-				printNodeSource(node->son[0], source_code)
+				printNodeSource(node->son[0], source_code);
 			break;
 
 			case AST_ARGFUNFIM:
@@ -284,7 +286,7 @@ void printNodeSource(AST *node, FILE *source_code){
 			case AST_EXP: 
 				fprintf(source_code, " ( ");
 				printNodeSource(node->son[0], source_code);
-				fprintf(source_code, " ) ", );
+				fprintf(source_code, " ) ");
 			break;
 
 			case AST_ASSPT1: 

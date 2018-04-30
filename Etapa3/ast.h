@@ -2,6 +2,8 @@
 #define AST_HEADER
 
 #include "tabelaHash.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_SONS 4
 
@@ -55,6 +57,7 @@
 #define AST_DECPTASS 48
 #define AST_LPARAM 49
 #define AST_FPARAM 50
+#define AST_PT2 51
 
 FILE * source_code;
 
@@ -62,7 +65,7 @@ typedef struct ast_node
 {
 	int tipo;
 	hash_Node * symbol;
-	struct as_node * son[MAX_SONS];
+	struct ast_node * son[MAX_SONS];
 } AST;
 
 AST* astCreate(int type, hash_Node *symbol, AST *son0, AST *son1, AST *son2, AST *son3);

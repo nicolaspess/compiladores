@@ -1,8 +1,9 @@
-// Etapa 2
+// Etapa 3
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "ast.h"
 
 extern int isRunning();
 extern int getLineNumber();

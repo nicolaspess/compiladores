@@ -1,6 +1,5 @@
 %{
 
-#include "tabelaHash.h"
 int running = 1;  
 int linhaNumero = 1;    
 
@@ -12,7 +11,6 @@ int linhaNumero = 1;
 
 #include "ast.h"
 #include "y.tab.h"
-#include "tabelaHash.c"
 
 
 %}

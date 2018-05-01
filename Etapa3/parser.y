@@ -68,7 +68,7 @@ extern int getLineNumber();
 %start programa
 
 %%
-programa : listaDeDeclaracoes { astPrint($1, 0);  }
+programa : listaDeDeclaracoes { astPrint($1, 0);  printSource($1);}
          ;
 
 listaDeDeclaracoes : declaracoes listaDeDeclaracoes { $$ = astCreate(AST_LDEC, 0, $1, $2, 0, 0); }
@@ -147,7 +147,7 @@ argprint : expressao argprint2  { $$ = astCreate(AST_PRINTARG, 0, $1, $2, 0, 0);
          ;
 
 argprint2: expressao argprint2  { $$ = astCreate(AST_PRINTARG, 0, $1, $2, 0, 0); }
-         |
+         | { $$ = 0; }
          ;
 
 expressao : TK_IDENTIFIER                           { $$ = astCreate(AST_SYMBOL, $1, 0, 0, 0, 0); }

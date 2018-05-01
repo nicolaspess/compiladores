@@ -4,8 +4,15 @@
 
 AST* astCreate(int type, hash_Node *symbol, AST *son0, AST *son1, AST *son2, AST *son3){
 	
+	printf("tipo: %d \n", type);
+	if (symbol == NULL){
+		printf("é nulo\n");
+	}else{
+		printf("nao é nulo\n");
+	}
+
 	AST* newnode;
-	newnode = (AST*) calloc(1,sizeof(AST));
+	newnode = (AST*) malloc(sizeof(AST));
 	newnode->tipo = type;
 	newnode->symbol = symbol;
 	newnode->son[0] = son0;
@@ -82,16 +89,19 @@ void astPrint(AST *node, int level){
 
 void printSource(AST *raiz){
 
-   //printNodeSource(AST *node, FILE *source_code);
+   printNodeSource(raiz, source_code);
 
 	
 }
 
 void printNodeSource(AST *node, FILE *source_code){
+	
+
 	if (node){
 		switch(node->tipo){
+			
 			case AST_SYMBOL: 
-				fprintf(source_code, "%s\n", node->symbol->texto);
+				fprintf(source_code, " %s ", node->symbol->texto);
 				if(node->son[0] != 0 ){
 					fprintf(source_code, " ");
 					printNodeSource(node->son[0], source_code);
@@ -209,14 +219,14 @@ void printNodeSource(AST *node, FILE *source_code){
 				printNodeSource(node->son[0], source_code);
 				fprintf(source_code, " to ");
 				printNodeSource(node->son[1], source_code);
-				fprintf(source_code, ")");
+				fprintf(source_code, ") \n");
 				printNodeSource(node->son[2], source_code);
 			break;
 
 			case AST_BLOCO: 
-				fprintf(source_code, "{");
+				fprintf(source_code, "\n{ \n ");
 				printNodeSource(node->son[0], source_code);
-				fprintf(source_code, "}");
+				fprintf(source_code, "\n}\n ");
 			break;
 
 			case AST_BLOCOCMD: 
@@ -225,7 +235,7 @@ void printNodeSource(AST *node, FILE *source_code){
 			break;
 
 			case AST_FIMCMD: 
-				fprintf(source_code, "; ");
+				fprintf(source_code, ";\n");
 				printNodeSource(node->son[0], source_code);
 				printNodeSource(node->son[1], source_code);
 			break;
@@ -318,20 +328,23 @@ void printNodeSource(AST *node, FILE *source_code){
 				fprintf(source_code, "float");
 			break;
 
-			case AST_LDEC: ;
+			case AST_LDEC: 
+				printNodeSource(node->son[0], source_code);
+				printNodeSource(node->son[1], source_code);
+			break;
 
 			case AST_DEC: 
 				printNodeSource(node->son[0], source_code);
 				fprintf(source_code, " %s = ", node->symbol->texto);
 				printNodeSource(node->son[1], source_code);
-				fprintf(source_code, ";");
+				fprintf(source_code, ";\n");
 			break;
 
 			case AST_DECPT: 
 				printNodeSource(node->son[0], source_code);
 				fprintf(source_code, " #");
 				fprintf(source_code, " %s", node->symbol->texto);
-				fprintf(source_code, ";");
+				fprintf(source_code, ";\n");
 			break;
 
 			case AST_DECPTASS: 
@@ -339,7 +352,7 @@ void printNodeSource(AST *node, FILE *source_code){
 				fprintf(source_code, " #");
 				fprintf(source_code, " %s = ", node->symbol->texto);
 				printNodeSource(node->son[1], source_code);
-				fprintf(source_code, ";");
+				fprintf(source_code, ";\n");
 			break;			
 
 			case AST_DECARR: 
@@ -348,14 +361,14 @@ void printNodeSource(AST *node, FILE *source_code){
 				printNodeSource(node->son[1], source_code);
 				fprintf(source_code, "] ");
 				printNodeSource(node->son[2], source_code);
-				fprintf(source_code, ";");
+				fprintf(source_code, ";\n");
 			break;
 
 			case AST_DECFUN: 
 				printNodeSource(node->son[0], source_code);
-				fprintf(source_code, " %s (", node->symbol->texto);
+				fprintf(source_code, " %s( ", node->symbol->texto);
 				printNodeSource(node->son[1], source_code);
-				fprintf(source_code, ") ");
+				fprintf(source_code, " ) ");
 				printNodeSource(node->son[2], source_code);
 			break;
 
@@ -390,6 +403,10 @@ void printNodeSource(AST *node, FILE *source_code){
 				printNodeSource(node->son[0], source_code);
 				fprintf(source_code, " ");
 				printNodeSource(node->son[1], source_code);
+			break;
+
+			default:
+				fputs("UNKNOWN", source_code);
 			break;
 
 		}

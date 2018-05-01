@@ -37,13 +37,13 @@ to     {return KW_TO;}
 "&&"   {return OPERATOR_AND;}
 "||"   {return OPERATOR_OR;}
 
-[a-zA-Z_][a-zA-Z_0-9]*   {hash_Insert(SYMBOL_TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
+[a-zA-Z_][a-zA-Z_0-9]*   {yylval.symbol = hash_Insert(SYMBOL_TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
 
-[0-9]+                   {hash_Insert(SYMBOL_LIT_INTEGER, yytext); return LIT_INTEGER;}
-[0-9]+\.[0-9]+           {hash_Insert(SYMBOL_LIT_REAL, yytext); return LIT_REAL;}
+[0-9]+                   {yylval.symbol = hash_Insert(SYMBOL_LIT_INTEGER, yytext); return LIT_INTEGER;}
+[0-9]+\.[0-9]+           {yylval.symbol = hash_Insert(SYMBOL_LIT_REAL, yytext); return LIT_REAL;}
 
-'[a-zA-Z]'               {hash_Insert(SYMBOL_LIT_CHAR, yytext); return LIT_CHAR;}
-\"[^\"\n]*\"             {hash_Insert(SYMBOL_LIT_STRING, yytext); return LIT_STRING;}
+'[a-zA-Z]'               {yylval.symbol = hash_Insert(SYMBOL_LIT_CHAR, yytext); return LIT_CHAR;}
+\"[^\"\n]*\"             {yylval.symbol = hash_Insert(SYMBOL_LIT_STRING, yytext); return LIT_STRING;}
 
 [-,;:()\[\]{}+*/<>=!&$#] {return yytext[0];}
 [\n]                     {linhaNumero++;}

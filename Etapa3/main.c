@@ -1,4 +1,4 @@
-// Etapa 3
+// Etapa 2
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
 
 #include <stdio.h>
@@ -24,6 +24,7 @@ int main(int argc, char *argv[]){
 	}else{
 		if( source_code = fopen(argv[2], "w+")){
 			yyin = file;
+
 			initMe();
 			
 			yyparse();

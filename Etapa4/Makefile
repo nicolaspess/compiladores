@@ -1,4 +1,4 @@
-etapa4: y.tab.o lex.yy.o main.o tabelaHash.o ast.o
+etapa4: y.tab.o lex.yy.o main.o tabelaHash.o ast.o semantic.o
 	gcc -o etapa4 y.tab.o lex.yy.o main.o tabelaHash.o ast.o semantic.o
 
 main.o: main.c

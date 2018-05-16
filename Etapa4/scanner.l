@@ -3,12 +3,6 @@
 int running = 1;  
 int linhaNumero = 1;    
 
-#define SYMBOL_LIT_CHAR 1
-#define SYMBOL_LIT_INTEGER 2
-#define SYMBOL_LIT_REAL 3
-#define SYMBOL_LIT_STRING 4
-#define SYMBOL_TK_IDENTIFIER 5
-
 #include "ast.h"
 #include "y.tab.h"
 
@@ -37,9 +31,9 @@ to     {return KW_TO;}
 "&&"   {return OPERATOR_AND;}
 "||"   {return OPERATOR_OR;}
 
-[a-zA-Z_][a-zA-Z_0-9]*   {yylval.symbol = hash_Insert(SYMBOL_TK_IDENTIFIER, yytext); return TK_IDENTIFIER;}
+[a-zA-Z_][a-zA-Z_0-9]*   {yylval.symbol = hash_Insert(SYMBOL_IDENTIFIER, yytext); return TK_IDENTIFIER;}
 
-[0-9]+                   {yylval.symbol = hash_Insert(SYMBOL_LIT_INTEGER, yytext); return LIT_INTEGER;}
+[0-9]+                   {yylval.symbol = hash_Insert(SYMBOL_LIT_INT, yytext); return LIT_INTEGER;}
 [0-9]+\.[0-9]+           {yylval.symbol = hash_Insert(SYMBOL_LIT_REAL, yytext); return LIT_REAL;}
 
 '[a-zA-Z]'               {yylval.symbol = hash_Insert(SYMBOL_LIT_CHAR, yytext); return LIT_CHAR;}

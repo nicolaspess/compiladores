@@ -169,7 +169,7 @@ void compilar(ASTREE *ast){
                     		compilar(ast->son[0]);
                	 		break;
 			case ASTREE_VARINI:
-                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code,": "); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
+                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code," "); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
                		 	break;
             case ASTREE_CHAR:
                 		fprintf(source_code,"char");

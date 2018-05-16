@@ -18,7 +18,7 @@ int verificaSemantica(ASTREE* node)
 	raiz = node;	
 	
 	setaTipos(node); 
-	verificaNaoDeclarado();
+	//verificaNaoDeclarado();
 	verificaUso(node);
 	verificaOperandos(node);
 
@@ -96,7 +96,8 @@ void verificaUso(ASTREE *node)
 	if(!node) return;
 	
 	switch(node->type){
-		case ASTREE_ATR: if(node->symbol->type != SYMBOL_VAR)
+		case ASTREE_VARINI: 
+			if(node->symbol->type != SYMBOL_VAR)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser escalar.\n");
 				erroSemantica++;
@@ -110,7 +111,7 @@ void verificaUso(ASTREE *node)
 				}
 			}		
 			break;
-		case ASTREE_FUNCALL: if(node->symbol->type != SYMBOL_FUN)
+		case ASTREE_FUNCALL: if(node->symbol->type != SYMBOL_IDENTIFIER)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser funcao.\n");
 				erroSemantica++;
@@ -120,7 +121,9 @@ void verificaUso(ASTREE *node)
 			break;
 		case ASTREE_FUNDEF: verificaRetorno(node, node->son[2]);
 			break;
-		case ASTREE_ARRAY_WRITE: if(node->symbol->type != SYMBOL_ARR)
+		case ASTREE_ARRAY_WRITE: 
+
+			if(node->symbol->type != SYMBOL_IDENTIFIER)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser vetor.\n");
 				erroSemantica++;
@@ -155,7 +158,7 @@ void verificaUso(ASTREE *node)
 				}			
 			}			
 			break;
-		case ASTREE_ARRAY_READ: if(node->symbol->type != SYMBOL_ARR)
+		case ASTREE_ARRAY_READ: if(node->symbol->type != SYMBOL_IDENTIFIER)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser vetor.\n");
 				erroSemantica++;
@@ -209,13 +212,15 @@ void verificaUso(ASTREE *node)
 				erroSemantica++;
 			}}
 			break;
-		case ASTREE_READ:if(node->symbol->type != SYMBOL_VAR)
+		case ASTREE_READ:
+			if(node->symbol->type != SYMBOL_IDENTIFIER)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser escalar.\n");
 				erroSemantica++;
 			}
 		break;
-		case ASTREE_SYMBOL: if(node->symbol->type != SYMBOL_VAR && node->symbol->type != SYMBOL_LIT_INT && node->symbol->type != SYMBOL_LIT_REAL && node->symbol->type != SYMBOL_LIT_CHAR && node->symbol->type != SYMBOL_LIT_STRING)
+		case ASTREE_SYMBOL:
+			if(node->symbol->type != SYMBOL_IDENTIFIER && node->symbol->type != SYMBOL_LIT_INT && node->symbol->type != SYMBOL_LIT_REAL && node->symbol->type != SYMBOL_LIT_CHAR && node->symbol->type != SYMBOL_LIT_STRING)
 			{
 				fprintf(stderr, "ERRO: identificador deve ser escalar.\n");
 				erroSemantica++;
@@ -291,23 +296,23 @@ void verificaRetorno(ASTREE *nodefunc, ASTREE *node)
 				       data = maiorTipo(node->son[0]->son[0]->son[0]->symbol->tk_type, node->son[0]->son[0]->son[1]->symbol->tk_type);
 				}
 				else {
-				if(node->son[0]->son[0]->type == ASTREE_L || node->son[0]->son[0]->type == ASTREE_G ||
-				   node->son[0]->son[0]->type == ASTREE_LE || node->son[0]->son[0]->type == ASTREE_GE || 
-				   node->son[0]->son[0]->type == ASTREE_EQ || node->son[0]->son[0]->type == ASTREE_NE || 
-				   node->son[0]->son[0]->type == ASTREE_NOT || node->son[0]->son[0]->type == ASTREE_AND ||
-				   node->son[0]->son[0]->type == ASTREE_OR)	{
-				       fprintf(stderr, "ERRO: retorno invalido.\n");
-					   flag = 1;	
-					   erroSemantica++;
-				}
-				else{
-					data = node->son[0]->son[0]->symbol->tk_type; 
-				}
+					if(node->son[0]->son[0]->type == ASTREE_L || node->son[0]->son[0]->type == ASTREE_G ||
+					   node->son[0]->son[0]->type == ASTREE_LE || node->son[0]->son[0]->type == ASTREE_GE || 
+					   node->son[0]->son[0]->type == ASTREE_EQ || node->son[0]->son[0]->type == ASTREE_NE || 
+					   node->son[0]->son[0]->type == ASTREE_NOT || node->son[0]->son[0]->type == ASTREE_AND ||
+					   node->son[0]->son[0]->type == ASTREE_OR)	{
+					       fprintf(stderr, "ERRO: retorno invalido.\n");
+						   flag = 1;	
+						   erroSemantica++;
+					}
+					else{
+						data = node->son[0]->son[0]->symbol->tk_type; 
+					}
 
                 }			
 			}
 
-			if(nodefunc->symbol != NULL)
+			if(node->symbol != NULL)
 			{
 				if (data != nodefunc->symbol->tk_type && flag == 0)
 				{

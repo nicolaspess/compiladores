@@ -23,7 +23,7 @@ typedef struct hash
 	int tk_type;
 	int type;
 	char* text;
-        int numparam;
+    int numparam;
 	struct hash *prox; 
 }hash_Node;
 

@@ -1,5 +1,8 @@
 int main()
   {
+  int a;
+  int pt;
+  
   a = 10;
   pt = &a;
   i = #pt;

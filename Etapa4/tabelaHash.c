@@ -37,9 +37,15 @@ hash_Node* hash_Find(char* text){
 }
 
 hash_Node* hash_Insert(int type, char* text){
+
 	int address;
 	hash_Node *newnode = 0;
+
 	address = hash_Address(text);
+	
+	if ((newnode = hash_Find(text)) != 0)
+		return newnode;
+
 	newnode = (hash_Node*) calloc(1,sizeof(hash_Node));
 	newnode->text = calloc(strlen(text)+1, sizeof(char));
 	strcpy(newnode->text, text);
@@ -66,7 +72,7 @@ void hashVerificaNaoDeclarado(){
 	hash_Node *node;
 	for(i = 0; i< SIZE; i++){
 		for(node = Tabela[i]; node; node = node->prox){
-			if(node->type == SYMBOL_IDENTIFIER){
+			if(node->tk_type == SYMBOL_IDENTIFIER){
 				fprintf(stderr, "ERRO semantico: variavel '%s' nao foi declarada.\n", node->text);			
 			}	
 		}

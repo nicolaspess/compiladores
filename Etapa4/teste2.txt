@@ -6,6 +6,7 @@ float f = 10.55;
 char c = 'x';
 char d = 65;
 int #pt = 0;
+char b = "k";
 
 
 int main()

@@ -4,12 +4,12 @@
 
 ASTREE* astCreate(int type, hash_Node *symbol, ASTREE *son0, ASTREE *son1, ASTREE *son2, ASTREE *son3){
 	
-	printf("tipo: %d \n", type);
-	if (symbol == NULL){
-		printf("é nulo\n");
-	}else{
-		printf("nao é nulo\n");
-	}
+	//printf("tipo: %d \n", type);
+	//if (symbol == NULL){
+	//	printf("é nulo\n");
+	//}else{
+	//	printf("nao é nulo\n");
+	//}
 
 	ASTREE* newnode;
 	newnode = (ASTREE*) malloc(sizeof(ASTREE));

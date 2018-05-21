@@ -199,7 +199,7 @@ void resultadoSemantica()
 {	
 	if(erro > 0)
 	{
-		fprintf(stderr, "%d erros semanticos.\n", erro);
+		fprintf(stderr, "%d erros semanticos.\n exit(4)", erro);
 		exit(4);
 	}
         else printf(" Semantica correta! \n");

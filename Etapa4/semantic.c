@@ -86,7 +86,9 @@ void setaTipos(ASTREE* node)
 
 void verificaNaoDeclarado(void)
 {
-	hashVerificaNaoDeclarado();
+	int erroSemantico2 = 0;
+	erroSemantico2 = hashVerificaNaoDeclarado();
+	if (erroSemantico2 == 1 ) erroSemantica++;
 }
 
 void verificaUso(ASTREE *node)

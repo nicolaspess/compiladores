@@ -67,15 +67,16 @@ int hash_Address(char* text){
 	return address -1;
 }
 
-void hashVerificaNaoDeclarado(){
+int hashVerificaNaoDeclarado(){
 	int i;
 	hash_Node *node;
 	for(i = 0; i< SIZE; i++){
 		for(node = Tabela[i]; node; node = node->prox){
 			if(node->tk_type == SYMBOL_IDENTIFIER){
-				fprintf(stderr, "ERRO semantico: variavel '%s' nao foi declarada.\n", node->text);			
+				fprintf(stderr, "ERRO semantico: variavel '%s' nao foi declarada.\n", node->text);	
+                                return 1;		
 			}	
 		}
 	}
+        return 0;
 }
-

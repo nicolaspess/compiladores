@@ -199,7 +199,7 @@ void resultadoSemantica()
 {	
 	if(erro > 0)
 	{
-		fprintf(stderr, "%d erros semanticos.\n exit(4)", erro);
+		fprintf(stderr, "%d erros semanticos. exit(4) \n", erro);
 		exit(4);
 	}
         else printf(" Semantica correta! \n");
@@ -207,6 +207,6 @@ void resultadoSemantica()
 
 int yyerror(char * err)
 {
-	printf("\nErro de sintaxe! Linha: %d \n", getLineNumber());
+	printf("\nErro de sintaxe! Linha: %d exit(3) \n", getLineNumber());
 	exit(3);
 }

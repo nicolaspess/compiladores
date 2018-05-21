@@ -35,4 +35,4 @@ hash_Node* hash_Insert(int tipo, char* texto);
 hash_Node* hash_Find(char* texto);
 int hash_Address(char* texto);
 
-void hashVerificaNaoDeclarado();
+int hashVerificaNaoDeclarado();

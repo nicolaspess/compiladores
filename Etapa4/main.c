@@ -16,43 +16,6 @@ extern int yyparse();
 extern ASTREE* get_rootAst();
 extern void resultSemantic();
 
-int main(int argc, char *argv[]){
-	FILE* file;
-	
-	if (argc < 2){
-		printf("Argumentos faltando. Chamar etapa e nome do arquivo de saida. \n");
-		return 1; // arquivo nao informado
-	}
-	else if (!(file = fopen(argv[1], "r"))){
-		printf ("Erro em arq!");
-		return 2; // arquivo inexistente
-	}
-	else{
-		if( source_code = fopen(argv[2], "w+")){
-			yyin = file;
-
-			initMe();
-			
-			yyparse();
-			
-			printf("\n Sintaxe correta! OK! \n");
-			
-			ASTREE *ast = get_rootAst();
-			
-			compilar(ast);
-			
-			hash_Print();
-			
-			resultadoSemantica();
-			 
-		}else{
-			fprintf(stderr, "Erro ao criar arquivo de saída \n");
-			return 2; // arquivo inexistente
-		}
-	}
-	return 0; // sucesso 
-}
-
 void compilar(ASTREE *ast){
  
   	if(!ast) return;
@@ -199,4 +162,42 @@ void compilar(ASTREE *ast){
 		}
 	}
 	return;
+}
+
+
+int main(int argc, char *argv[]){
+	FILE* file;
+	
+	if (argc < 2){
+		printf("Argumentos faltando. Chamar etapa e nome do arquivo de saida. \n");
+		return 1; // arquivo nao informado
+	}
+	else if (!(file = fopen(argv[1], "r"))){
+		printf ("Erro em arq!");
+		return 2; // arquivo inexistente
+	}
+	else{
+		if( source_code = fopen(argv[2], "w+")){
+			yyin = file;
+
+			initMe();
+			
+			yyparse();
+			
+			printf("\n Sintaxe correta! OK! \n");
+			
+			ASTREE *ast = get_rootAst();
+			
+			compilar(ast);
+			
+			hash_Print();
+			
+			resultadoSemantica();
+			 
+		}else{
+			fprintf(stderr, "Erro ao criar arquivo de saída \n");
+			return 2; // arquivo inexistente
+		}
+	}
+	return 0; // sucesso 
 }

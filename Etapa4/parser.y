@@ -202,6 +202,7 @@ void resultadoSemantica()
 		fprintf(stderr, "%d erros semanticos.\n", erro);
 		exit(4);
 	}
+        else printf(" Semantica correta! \n");
 }
 
 int yyerror(char * err)

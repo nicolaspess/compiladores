@@ -169,11 +169,11 @@ int main(int argc, char *argv[]){
 	FILE* file;
 	
 	if (argc < 2){
-		printf("Argumentos faltando. Chamar etapa e nome do arquivo de saida. \n");
+		printf("Argumentos faltando. Chamar etapa e nome do arquivo de saida. exit(1) \n");
 		return 1; // arquivo nao informado
 	}
 	else if (!(file = fopen(argv[1], "r"))){
-		printf ("Erro em arq!");
+		printf ("Erro em arq! exit(2)");
 		return 2; // arquivo inexistente
 	}
 	else{
@@ -195,10 +195,10 @@ int main(int argc, char *argv[]){
 			resultadoSemantica();
 			 
 		}else{
-			fprintf(stderr, "Erro ao criar arquivo de saída \n");
+			fprintf(stderr, "Erro ao criar arquivo de saída! exit(2) \n");
 			return 2; // arquivo inexistente
 		}
 	}
-	printf("\n Semantica correta! OK, sucesso! \n");
+	printf("\n Semantica correta! OK, sucesso! exit(0) \n");
 	return 0; // sucesso 
 }

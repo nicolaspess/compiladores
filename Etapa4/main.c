@@ -199,5 +199,6 @@ int main(int argc, char *argv[]){
 			return 2; // arquivo inexistente
 		}
 	}
+	printf("\n Semantica correta! OK, sucesso! \n");
 	return 0; // sucesso 
 }

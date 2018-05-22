@@ -64,6 +64,9 @@ void compilar(ASTREE *ast){
 			case ASTREE_NOT:
                 		fprintf(source_code,"!");compilar(ast->son[0]);  
                 		break;
+            case ASTREE_VARPTINI:
+
+            			break;
             case ASTREE_READ:
                 		fprintf(source_code,"read > "); fprintf(source_code,"%s", ast->symbol->text);
                 		break;
@@ -131,6 +134,15 @@ void compilar(ASTREE *ast){
                 		}else
                     		compilar(ast->son[0]);
                	 		break;
+            case ASTREE_INTL2:
+
+            			break;
+            case ASTREE_FIMCMDL:
+
+            			break;
+            case ASTREE_FPARL:
+
+            			break;
 			case ASTREE_VARINI:
                 		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code," "); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
                		 	break;

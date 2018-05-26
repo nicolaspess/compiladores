@@ -299,7 +299,7 @@ void verificaOperandos(ASTREE* node)
 	}
 
 	if (node->type = ASTREE_ATR){
-		HashNode * n = hashFind(node->symbol->text);
+		hash_Node * n = hashFind(node->symbol->text);
 
 	}
 	

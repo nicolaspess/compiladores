@@ -1,14 +1,14 @@
 etapa5: y.tab.o lex.yy.o main.o tabelaHash.o ast.o semantic.o tac.o
 	gcc -o etapa5 y.tab.o lex.yy.o main.o tabelaHash.o ast.o semantic.o tac.o
 
+tac.o: tac.c
+	gcc -c tac.c
+
 main.o: main.c
 	gcc -c main.c
 
 ast.o: ast.c
 	gcc -c ast.c
-
-tac.o: tac.c
-	gcc -c tac.c
 
 semantic.o:
 	gcc -c semantic.c

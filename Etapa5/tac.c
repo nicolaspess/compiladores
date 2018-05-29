@@ -2,7 +2,7 @@
 #include "tac.h"
 
 
-TAC* tacCreate(int type; hash_Node *res, hash_Node *op1, hash_Node *op2)
+TAC* tacCreate(int type, hash_Node *res, hash_Node *op1, hash_Node *op2)
 {
 	TAC *newtac = 0;
 	newtac = (TAC*) calloc(1, sizeof(TAC));
@@ -18,7 +18,7 @@ TAC* tacCreate(int type; hash_Node *res, hash_Node *op1, hash_Node *op2)
 
 TAC* tacPrintSingle(TAC *tac)
 {
-	if(!tac) break;
+	if(!tac) return;
 	fprintf(stderr, "TAC(");
 	switch (tac->type)
 	{
@@ -54,22 +54,26 @@ TAC* tacPrintSingle(TAC *tac)
 		default: fprintf(stderr, "TAC_UNKNOWN"); break;
 	}
 
-	if(tac->res) fprintf(stderr, "%s", tac->res->text);
+	if(tac->res) fprintf(stderr, " %s", tac->res->text);
 	else fprintf(stderr, ",0");
 
-	if(tac->op1) fprintf(stderr, "%s", tac->op1->text);
+	if(tac->op1) fprintf(stderr, " %s", tac->op1->text);
 	else fprintf(stderr, ",0");
 
-	if(tac->op2) fprintf(stderr, "%s", tac->op2->text);
+	if(tac->op2) fprintf(stderr, " %s", tac->op2->text);
 	else fprintf(stderr, ",0");
 	fprintf(stderr, ")\n");
 }
 
 TAC* tacPrintBack(TAC *tac)
-{
-	if (!tac) break;
+{	
+	printf("tacPrintBack__-> OIII TO AQUI\n");
+	if (!tac) return;
+	printf("tacPrintBack__-> PASSOUUU\n");
 	tacPrintSingle(tac);
+	printf("tacPrintBack__-> OLARRR\n");
 	tacPrintBack(tac->prev);
+	printf("tacPrintBack__-> KKKK\n");
 }
 
 TAC* tacJoin(TAC *l1, TAC *l2)
@@ -77,13 +81,14 @@ TAC* tacJoin(TAC *l1, TAC *l2)
 	TAC* aux = 0;
 	if(!l1) return l2;
 	if(!l2) return l1;
+	
 	for(aux = l2; aux->prev; aux = aux->prev)
 		aux->prev = l1;
 	return l2;
 }
 
 //INTERMEDIATE CODE GENERATOR
-TAC* codeGenerator(AST* node)
+TAC* codeGenerator(ASTREE* node)
 {
 	int i;
 	TAC* result;
@@ -103,14 +108,14 @@ TAC* codeGenerator(AST* node)
 		case ASTREE_SUB: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_SUB, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
 		case ASTREE_MUL: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_MUL, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
 		case ASTREE_DIV: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_DIV, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
-		case ASTREE_L: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_L, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_G: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_G, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_LE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_LE, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_GE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_GE, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_EQ: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_EQ, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_NE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_NE, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_AND: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_AND, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
-		case ASTREE_OR: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_OR, makeTemp(), code[0]?code[0]->res:0, code[1]:code[1]->res:0))); break
+		case ASTREE_L: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_L, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_G: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_G, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_LE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_LE, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_GE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_GE, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_EQ: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_EQ, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_NE: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_NE, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_AND: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_AND, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
+		case ASTREE_OR: result = tacJoin(code[0], tacJoin(code[1], tacCreate(TAC_OR, makeTemp(), code[0]?code[0]->res:0, code[1]?code[1]->res:0))); break;
 
 		case ASTREE_ATR: result = tacJoin(code[0], tacCreate(TAC_ASSIGN, node->symbol, code[0]?code[0]->res:0,0)); break;
 
@@ -135,7 +140,7 @@ TAC* codeGenerator(AST* node)
 						arg->res = node->symbol;
 				}
 			}
-			return funcall_tac
+			return funcall_tac;
 			break;
 
 		case ASTREE_ARGFUN: return tacJoin(tacJoin(code[0], tacCreate(TAC_ARG, 0, code[0]?code[0]->res:0,0)), code[1]); break;

@@ -27,6 +27,7 @@
 
 #define TAC_RETURN 19
 #define TAC_FUNCALL 20
+#define TAC_ARG 21
 
 #define TAC_JZ 30
 #define TAC_LABEL 31
@@ -45,11 +46,11 @@ typedef struct tac{
 	struct tav *next;
 } TAC;
 
-TAC* tacCreate(int type; hash_Node *res, hash_Node *op1, hash_Node *op2);
+TAC* tacCreate(int type, hash_Node *res, hash_Node *op1, hash_Node *op2);
 TAC* tacPrintSingle(TAC *tac);
 TAC* tacPrintBack(TAC *tac);
 TAC* tacJoin(TAC* l1, TAC* l2);
-TAC* codeGenerator(AST *node);
+TAC* codeGenerator(ASTREE *node);
 TAC* makeBinOp(int type, TAC* code0, TAC* code1);
 TAC* makeWhile(TAC* code0, TAC* code1);
 TAC* makeIfThen(TAC* code0, TAC* code1);

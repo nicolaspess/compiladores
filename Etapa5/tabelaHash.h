@@ -1,3 +1,5 @@
+#ifndef HASH_HEADER
+#define HASH_HEADER
 // Etapa 1
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
 
@@ -40,3 +42,5 @@ int hashVerificaNaoDeclarado();
 
 hash_Node* makeTemp(void);
 hash_Node* makeLabel(void);
+
+#endif

@@ -73,7 +73,7 @@ int erro;
 %start programa
 
 %%
-programa : listaDeDeclaracoes { root = $$; astPrint(root, 0); /*erro = verificaSemantica(root);*/ /*printSource($1)*/; tacPrintBack(codeGenerator($1));}
+programa : listaDeDeclaracoes { root = $$; astPrint(root, 0); /*erro = verificaSemantica(root);*/ /*printSource($1)*/; tacPrintForward(tacReverse(codeGenerator($1)));}
          ;
 
 listaDeDeclaracoes : declaracoes listaDeDeclaracoes { $$ = astCreate(ASTREE_DFNL, 0, $1, $2, 0, 0); }

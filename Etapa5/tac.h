@@ -48,6 +48,8 @@ typedef struct tac{
 
 TAC* tacCreate(int type, hash_Node *res, hash_Node *op1, hash_Node *op2);
 TAC* tacPrintSingle(TAC *tac);
+TAC* tacPrintForward(TAC *first);
+TAC* tacReverse(TAC *last);
 TAC* tacPrintBack(TAC *tac);
 TAC* tacJoin(TAC* l1, TAC* l2);
 TAC* codeGenerator(ASTREE *node);

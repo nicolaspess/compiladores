@@ -54,26 +54,39 @@ TAC* tacPrintSingle(TAC *tac)
 		default: fprintf(stderr, "TAC_UNKNOWN"); break;
 	}
 
-	if(tac->res) fprintf(stderr, " %s", tac->res->text);
+	if(tac->res) fprintf(stderr, "%s", tac->res->text);
 	else fprintf(stderr, ",0");
 
-	if(tac->op1) fprintf(stderr, " %s", tac->op1->text);
+	if(tac->op1) fprintf(stderr, "%s", tac->op1->text);
 	else fprintf(stderr, ",0");
 
-	if(tac->op2) fprintf(stderr, " %s", tac->op2->text);
+	if(tac->op2) fprintf(stderr, "%s", tac->op2->text);
 	else fprintf(stderr, ",0");
 	fprintf(stderr, ")\n");
 }
 
+TAC* tacPrintForward(TAC *first)
+{
+	TAC *tac;
+	for (tac = first; tac != NULL; tac = tac->next){
+		tacPrintSingle(tac);
+	}
+}
+
+TAC* tacReverse(TAC *last)
+{
+	TAC *tac = 0;
+	for(tac=last; tac->prev; tac = tac->prev){
+		tac->prev->next = tac;
+	}
+	return tac;
+}
+
 TAC* tacPrintBack(TAC *tac)
 {	
-	printf("tacPrintBack__-> OIII TO AQUI\n");
 	if (!tac) return;
-	printf("tacPrintBack__-> PASSOUUU\n");
 	tacPrintSingle(tac);
-	printf("tacPrintBack__-> OLARRR\n");
 	tacPrintBack(tac->prev);
-	printf("tacPrintBack__-> KKKK\n");
 }
 
 TAC* tacJoin(TAC *l1, TAC *l2)
@@ -81,7 +94,6 @@ TAC* tacJoin(TAC *l1, TAC *l2)
 	TAC* aux = 0;
 	if(!l1) return l2;
 	if(!l2) return l1;
-	
 	for(aux = l2; aux->prev; aux = aux->prev)
 		aux->prev = l1;
 	return l2;

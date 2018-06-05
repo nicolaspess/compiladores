@@ -82,7 +82,7 @@ listaDeDeclaracoes : declaracoes listaDeDeclaracoes { $$ = astCreate(ASTREE_DFNL
 declaracoes : tipo TK_IDENTIFIER '=' literal ';'                   { $$ = astCreate(ASTREE_VARINI, $2, $1, $4, 0, 0); }
             | tipo '#' TK_IDENTIFIER ';'                           { $$ = astCreate(ASTREE_VARPT, $3, $1, 0, 0, 0); }
             | tipo '#' TK_IDENTIFIER '=' literal ';'               { $$ = astCreate(ASTREE_VARPTINI, $3, $1, $5, 0, 0); }
-            | tipo TK_IDENTIFIER '[' LIT_INTEGER ']' inicializacao ';' { $$ = astCreate(ASTREE_ARRINI, $2, $1, astreeCreate(ASTREE_SYMBOL, $4, 0, 0, 0, 0), $6, 0); }
+            | tipo TK_IDENTIFIER '[' literal ']' inicializacao ';' { $$ = astCreate(ASTREE_ARRINI, $2, $1, $4, $6, 0); }
             | tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco   { $$ = astCreate(ASTREE_FUNDEF, $2, $1, $4, $6, 0); }
             ;
 
@@ -94,11 +94,27 @@ tipo : KW_CHAR  { $$ = astCreate(ASTREE_CHAR, 0, 0, 0, 0, 0); }
 literal : LIT_CHAR     { $$ = astCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
 	      | LIT_INTEGER  { $$ = astCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
 	      | LIT_REAL     { $$ = astCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
+	      | LIT_STRING   { $$ = astCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
 	      ;		
 
-inicializacao : ':' literal inicializacao        { $$ = astCreate(ASTREE_INTL, 0, $2, $3, 0, 0); }
+inicializacao : ':' inicializacao2        { $$ = astCreate(ASTREE_INTL, 0, $2, 0, 0, 0); }
               | { $$ = 0; }
               ;
+			  
+inicializacao2 : literal inicializacao2   { $$ = astCreate(ASTREE_INTL2, 0, $1, $2, 0, 0); }
+               | { $$ = 0; }
+               ;
+
+listaDeParametros : parametro fimDeParametros  { $$ = astCreate(ASTREE_PARL, 0, $1, $2, 0, 0); }                
+                ;
+
+fimDeParametros : ',' parametro fimDeParametros { $$ = astCreate(ASTREE_FPARL, 0, $2, $3, 0, 0); }
+                | { $$ = 0; }
+                ; 
+
+parametro : tipo TK_IDENTIFIER  { $$ = astCreate(ASTREE_PARAM, $2, $1, 0, 0, 0); }
+          | { $$ = 0; }
+          ;
 
 bloco : '{' blocoDeComandos '}' { $$ = astCreate(ASTREE_BRACES, 0, $2, 0, 0, 0); }
       ;
@@ -106,7 +122,7 @@ bloco : '{' blocoDeComandos '}' { $$ = astCreate(ASTREE_BRACES, 0, $2, 0, 0, 0);
 blocoDeComandos : comando fimDeComando { $$ = astCreate(ASTREE_CMDL, 0, $1, $2, 0, 0); }
                 ;
 
-fimDeComando : ';' comando fimDeComando { $$ = astCreate(ASTREE_CMDL, 0, $2, $3, 0, 0); }
+fimDeComando : ';' comando fimDeComando { $$ = astCreate(ASTREE_FIMCMDL, 0, $2, $3, 0, 0); }
              | { $$ = 0; }
              ;
 
@@ -131,9 +147,12 @@ atribuicao : TK_IDENTIFIER '=' expressao                    { $$ = astCreate(AST
            | TK_IDENTIFIER '[' expressao ']' '=' expressao  { $$ = astCreate(ASTREE_ARRAY_WRITE, $1, $3, $6, 0, 0); }
            ;
 
-argprint : expressao argprint  { $$ = astCreate(ASTREE_PRINTARG, 0, $1, $2, 0, 0); }
-           | expressao         { $$ = astCreate(ASTREE_PRINTARG, 0, $1, 0, 0, 0); }
-		   ;
+argprint : expressao argprint2  { $$ = astCreate(ASTREE_PRINTARG, 0, $1, $2, 0, 0); }
+         ;
+
+argprint2: expressao argprint2  { $$ = astCreate(ASTREE_PRINTARG, 0, $1, $2, 0, 0); }
+         | { $$ = 0; }
+         ;
 
 expressao : TK_IDENTIFIER                           { $$ = astCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
           | '#' TK_IDENTIFIER                       { $$ = astCreate(ASTREE_PT1, $2, 0, 0, 0, 0); }
@@ -155,21 +174,19 @@ expressao : TK_IDENTIFIER                           { $$ = astCreate(ASTREE_SYMB
           | expressao OPERATOR_NE expressao         { $$ = astCreate(ASTREE_NE, 0, $1, $3, 0, 0); }
           | expressao OPERATOR_AND expressao        { $$ = astCreate(ASTREE_AND, 0, $1, $3, 0, 0); }
           | expressao OPERATOR_OR expressao         { $$ = astCreate(ASTREE_OR, 0, $1, $3, 0, 0); }
-          | TK_IDENTIFIER '(' listaDeParametros ')' { $$ = astCreate(ASTREE_FUNCALL, $1, $3, 0, 0, 0); }
-		  | LIT_STRING				                { $$ = astreeCreate(ASTREE_SYMBOL, $1, 0, 0, 0, 0); }
+          | TK_IDENTIFIER '(' listaDeArgumentos ')' { $$ = astCreate(ASTREE_FUNCALL, $1, $3, 0, 0, 0); }
           ;
-		  
-listaDeParametros : parametro fimDeParametros  { $$ = astCreate(ASTREE_PARL, 0, $1, $2, 0, 0); }         
-                  | { $$ = 0; }       
+
+listaDeArgumentos : argfunc fimDeArgumentos     { $$ = astCreate(ASTREE_ARGFUN, 0, $1, $2, 0, 0);}
+                  ;
+
+fimDeArgumentos : ',' argfunc fimDeArgumentos   { $$ = astCreate(ASTREE_ARGFUNFIM, 0, $2, $3, 0, 0); }
+                | { $$ = 0; }
                 ;
 
-fimDeParametros : ',' parametro fimDeParametros { $$ = astCreate(ASTREE_PARL, 0, $2, $3, 0, 0); }
-                | { $$ = 0; }
-                ; 
-
-parametro : tipo TK_IDENTIFIER  { $$ = astCreate(ASTREE_PARAM, $2, $1, 0, 0, 0); }
-          | expressao 
-          ;
+argfunc: expressao { $$ = $1 ;}
+       | { $$ = 0; }
+       ;
 %%
 
 

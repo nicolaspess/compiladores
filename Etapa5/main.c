@@ -1,4 +1,4 @@
-// Etapa 2
+// Etapa 5
 // Daniel Machado Nidejelski, Nícolas Vincent Dall'Bello Pessutto 
 
 #include <stdio.h>
@@ -63,12 +63,9 @@ void compilar(ASTREE *ast){
                 		break;
 			case ASTREE_NOT:
                 		fprintf(source_code,"!");compilar(ast->son[0]);  
-                		break;
-            case ASTREE_VARPTINI:
-
-            			break;
+                		break;			
             case ASTREE_READ:
-                		fprintf(source_code,"read > "); fprintf(source_code,"%s", ast->symbol->text);
+                		fprintf(source_code,"read "); fprintf(source_code,"%s", ast->symbol->text);
                 		break;
             case ASTREE_RETURN:
                			fprintf(source_code,"return "); compilar(ast->son[0]);
@@ -130,21 +127,12 @@ void compilar(ASTREE *ast){
                 		break;
             case ASTREE_INTL:
 				        if(ast->son[1] != NULL){
-                    		compilar(ast->son[0]); fprintf(source_code," "); compilar(ast->son[1]);
+                    		fprintf(source_code,":"); compilar(ast->son[0]); fprintf(source_code," "); compilar(ast->son[1]);
                 		}else
                     		compilar(ast->son[0]);
                	 		break;
-            case ASTREE_INTL2:
-
-            			break;
-            case ASTREE_FIMCMDL:
-
-            			break;
-            case ASTREE_FPARL:
-
-            			break;
 			case ASTREE_VARINI:
-                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code," "); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
+                		fprintf(source_code,"%s", ast->symbol->text); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
                		 	break;
             case ASTREE_CHAR:
                 		fprintf(source_code,"char");
@@ -162,12 +150,31 @@ void compilar(ASTREE *ast){
                 		fprintf(source_code,"if("); compilar(ast->son[0]); fprintf(source_code,") then "); compilar(ast->son[1]);fprintf(source_code,"else "); compilar(ast->son[1]);
 				        break;  
 			case ASTREE_ARRINI:
-                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code,": "); compilar(ast->son[0]); fprintf(source_code,"["); 	compilar(ast->son[1]); fprintf(source_code,"]"); 	
+                		fprintf(source_code,"%s", ast->symbol->text); compilar(ast->son[0]); fprintf(source_code,"["); 	compilar(ast->son[1]); fprintf(source_code,"]"); 	
 				
 				        if(ast->son[2]!=NULL)
 					        compilar(ast->son[2]);
 				        fprintf(source_code,";");
                 		break;
+           
+/*          case ASTREE_VARPT:
+                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code," #"); compilar(ast->son[0]); fprintf(source_code,";");
+            			break;
+            case ASTREE_VARPTINI:
+                		fprintf(source_code,"%s", ast->symbol->text); fprintf(source_code," #"); compilar(ast->son[0]); fprintf(source_code,"="); compilar(ast->son[1]);fprintf(source_code,";"); compilar(ast->son[2]);
+            			break;	
+				
+	    case ASTREE_INTL2:
+
+            			break;
+            case ASTREE_FIMCMDL:
+
+            			break;
+            case ASTREE_FPARL:
+
+            			break;
+				
+				*/				
 			default:
 				printf("ERRO\n");
 				break;

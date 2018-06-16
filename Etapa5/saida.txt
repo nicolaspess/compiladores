@@ -1,12 +1,12 @@
-a int=0; 
-i int=0; 
-v: int[10]; 
-mat: int[10]; 
-f float=10.55; 
-c char='x'; 
-d char=65; 
+aint=0; 
+iint=0; 
+vint[10]; 
+matint[10]; 
+ffloat=10.55; 
+cchar='x'; 
+dchar=65; 
  
-b char="k"; 
+bchar="k"; 
 (int)main(){
 a=10;
 } 

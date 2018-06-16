@@ -1,2455 +1,2433 @@
-   0  $accept : programa $end
+Terminals unused in grammar
 
-   1  programa : listaDeDeclaracoes
+   TOKEN_ERROR
 
-   2  listaDeDeclaracoes : declaracoes listaDeDeclaracoes
-   3                     |
 
-   4  declaracoes : tipo TK_IDENTIFIER '=' literal ';'
-   5              | tipo '#' TK_IDENTIFIER ';'
-   6              | tipo '#' TK_IDENTIFIER '=' literal ';'
-   7              | tipo TK_IDENTIFIER '[' literal ']' inicializacao ';'
-   8              | tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco
+State 63 conflicts: 1 shift/reduce
+State 142 conflicts: 1 shift/reduce
 
-   9  tipo : KW_CHAR
-  10       | KW_INT
-  11       | KW_FLOAT
 
-  12  literal : LIT_CHAR
-  13          | LIT_INTEGER
-  14          | LIT_REAL
-  15          | LIT_STRING
+Grammar
 
-  16  inicializacao : ':' inicializacao2
-  17                |
+    0 $accept: programa $end
 
-  18  inicializacao2 : literal inicializacao2
-  19                 |
+    1 programa: listaDeDeclaracoes
 
-  20  listaDeParametros : parametro fimDeParametros
+    2 listaDeDeclaracoes: declaracoes listaDeDeclaracoes
+    3                   | /* empty */
 
-  21  fimDeParametros : ',' parametro fimDeParametros
-  22                  |
+    4 declaracoes: tipo TK_IDENTIFIER '=' literal ';'
+    5            | tipo '#' TK_IDENTIFIER ';'
+    6            | tipo '#' TK_IDENTIFIER '=' literal ';'
+    7            | tipo TK_IDENTIFIER '[' literal ']' inicializacao ';'
+    8            | tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco
 
-  23  parametro : tipo TK_IDENTIFIER
-  24            |
+    9 tipo: KW_CHAR
+   10     | KW_INT
+   11     | KW_FLOAT
 
-  25  bloco : '{' blocoDeComandos '}'
+   12 literal: LIT_CHAR
+   13        | LIT_INTEGER
+   14        | LIT_REAL
+   15        | LIT_STRING
 
-  26  blocoDeComandos : comando fimDeComando
+   16 inicializacao: ':' inicializacao2
+   17              | /* empty */
 
-  27  fimDeComando : ';' comando fimDeComando
-  28               |
+   18 inicializacao2: literal inicializacao2
+   19               | /* empty */
 
-  29  comando : bloco
-  30          | KW_READ TK_IDENTIFIER
-  31          | KW_PRINT argprint
-  32          | KW_RETURN expressao
-  33          | atribuicao
-  34          | controleFluxo
-  35          |
+   20 listaDeParametros: parametro fimDeParametros
 
-  36  controleFluxo : KW_IF '(' expressao ')' KW_THEN comando
-  37                | KW_WHILE '(' expressao ')' comando
-  38                | KW_FOR '(' atribuicao KW_TO expressao ')' comando
-  39                | KW_IF '(' expressao ')' KW_THEN comando KW_ELSE comando
+   21 fimDeParametros: ',' parametro fimDeParametros
+   22                | /* empty */
 
-  40  atribuicao : TK_IDENTIFIER '=' expressao
-  41             | '#' TK_IDENTIFIER '=' expressao
-  42             | '&' TK_IDENTIFIER '=' expressao
-  43             | TK_IDENTIFIER '[' expressao ']' '=' expressao
+   23 parametro: tipo TK_IDENTIFIER
+   24          | /* empty */
 
-  44  argprint : expressao argprint2
+   25 bloco: '{' blocoDeComandos '}'
 
-  45  argprint2 : expressao argprint2
-  46            |
+   26 blocoDeComandos: comando fimDeComando
 
-  47  expressao : TK_IDENTIFIER
-  48            | '#' TK_IDENTIFIER
-  49            | '&' TK_IDENTIFIER
-  50            | TK_IDENTIFIER '[' expressao ']'
-  51            | '(' expressao ')'
-  52            | literal
-  53            | expressao '+' expressao
-  54            | expressao '-' expressao
-  55            | expressao '*' expressao
-  56            | expressao '/' expressao
-  57            | expressao '%' expressao
-  58            | expressao '>' expressao
-  59            | expressao '<' expressao
-  60            | '!' expressao
-  61            | expressao OPERATOR_LE expressao
-  62            | expressao OPERATOR_GE expressao
-  63            | expressao OPERATOR_EQ expressao
-  64            | expressao OPERATOR_NE expressao
-  65            | expressao OPERATOR_AND expressao
-  66            | expressao OPERATOR_OR expressao
-  67            | TK_IDENTIFIER '(' listaDeArgumentos ')'
+   27 fimDeComando: ';' comando fimDeComando
+   28             | /* empty */
 
-  68  listaDeArgumentos : argfunc fimDeArgumentos
+   29 comando: bloco
+   30        | KW_READ TK_IDENTIFIER
+   31        | KW_PRINT argprint
+   32        | KW_RETURN expressao
+   33        | atribuicao
+   34        | controleFluxo
+   35        | /* empty */
 
-  69  fimDeArgumentos : ',' argfunc fimDeArgumentos
-  70                  |
+   36 controleFluxo: KW_IF '(' expressao ')' KW_THEN comando
+   37              | KW_WHILE '(' expressao ')' comando
+   38              | KW_FOR '(' atribuicao KW_TO expressao ')' comando
+   39              | KW_IF '(' expressao ')' KW_THEN comando KW_ELSE comando
 
-  71  argfunc : expressao
-  72          |
-
+   40 atribuicao: TK_IDENTIFIER '=' expressao
+   41           | '#' TK_IDENTIFIER '=' expressao
+   42           | '&' TK_IDENTIFIER '=' expressao
+   43           | TK_IDENTIFIER '[' expressao ']' '=' expressao
+
+   44 argprint: expressao argprint2
+
+   45 argprint2: expressao argprint2
+   46          | /* empty */
+
+   47 expressao: TK_IDENTIFIER
+   48          | '#' TK_IDENTIFIER
+   49          | '&' TK_IDENTIFIER
+   50          | TK_IDENTIFIER '[' expressao ']'
+   51          | '(' expressao ')'
+   52          | literal
+   53          | expressao '+' expressao
+   54          | expressao '-' expressao
+   55          | expressao '*' expressao
+   56          | expressao '/' expressao
+   57          | expressao '%' expressao
+   58          | expressao '>' expressao
+   59          | expressao '<' expressao
+   60          | '!' expressao
+   61          | expressao OPERATOR_LE expressao
+   62          | expressao OPERATOR_GE expressao
+   63          | expressao OPERATOR_EQ expressao
+   64          | expressao OPERATOR_NE expressao
+   65          | expressao OPERATOR_AND expressao
+   66          | expressao OPERATOR_OR expressao
+   67          | TK_IDENTIFIER '(' listaDeArgumentos ')'
+
+   68 listaDeArgumentos: argfunc fimDeArgumentos
+
+   69 fimDeArgumentos: ',' argfunc fimDeArgumentos
+   70                | /* empty */
+
+   71 argfunc: expressao
+   72        | /* empty */
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 60
+'#' (35) 5 6 41 48
+'%' (37) 57
+'&' (38) 42 49
+'(' (40) 8 36 37 38 39 51 67
+')' (41) 8 36 37 38 39 51 67
+'*' (42) 55
+'+' (43) 53
+',' (44) 21 69
+'-' (45) 54
+'/' (47) 56
+':' (58) 16
+';' (59) 4 5 6 7 27
+'<' (60) 59
+'=' (61) 4 6 40 41 42 43
+'>' (62) 58
+'[' (91) 7 43 50
+']' (93) 7 43 50
+'{' (123) 25
+'}' (125) 25
+KW_CHAR (256) 9
+KW_INT (257) 10
+KW_FLOAT (259) 11
+KW_IF (261) 36 39
+KW_THEN (262) 36 39
+KW_ELSE (263) 39
+KW_WHILE (264) 37
+KW_FOR (265) 38
+KW_READ (266) 30
+KW_PRINT (267) 31
+KW_RETURN (268) 32
+KW_TO (269) 38
+OPERATOR_LE (270) 61
+OPERATOR_GE (271) 62
+OPERATOR_EQ (272) 63
+OPERATOR_NE (273) 64
+OPERATOR_AND (274) 65
+OPERATOR_OR (275) 66
+TK_IDENTIFIER (280) 4 5 6 7 8 23 30 40 41 42 43 47 48 49 50 67
+LIT_INTEGER (281) 13
+LIT_REAL (282) 14
+LIT_CHAR (283) 12
+LIT_STRING (284) 15
+TOKEN_ERROR (290)
+error (291)
+
+
+Nonterminals, with rules where they appear
+
+$accept (47)
+    on left: 0
+programa (48)
+    on left: 1, on right: 0
+listaDeDeclaracoes (49)
+    on left: 2 3, on right: 1 2
+declaracoes (50)
+    on left: 4 5 6 7 8, on right: 2
+tipo (51)
+    on left: 9 10 11, on right: 4 5 6 7 8 23
+literal (52)
+    on left: 12 13 14 15, on right: 4 6 7 18 52
+inicializacao (53)
+    on left: 16 17, on right: 7
+inicializacao2 (54)
+    on left: 18 19, on right: 16 18
+listaDeParametros (55)
+    on left: 20, on right: 8
+fimDeParametros (56)
+    on left: 21 22, on right: 20 21
+parametro (57)
+    on left: 23 24, on right: 20 21
+bloco (58)
+    on left: 25, on right: 8 29
+blocoDeComandos (59)
+    on left: 26, on right: 25
+fimDeComando (60)
+    on left: 27 28, on right: 26 27
+comando (61)
+    on left: 29 30 31 32 33 34 35, on right: 26 27 36 37 38 39
+controleFluxo (62)
+    on left: 36 37 38 39, on right: 34
+atribuicao (63)
+    on left: 40 41 42 43, on right: 33 38
+argprint (64)
+    on left: 44, on right: 31
+argprint2 (65)
+    on left: 45 46, on right: 44 45
+expressao (66)
+    on left: 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64
+    65 66 67, on right: 32 36 37 38 39 40 41 42 43 44 45 50 51 53 54
+    55 56 57 58 59 60 61 62 63 64 65 66 71
+listaDeArgumentos (67)
+    on left: 68, on right: 67
+fimDeArgumentos (68)
+    on left: 69 70, on right: 68 69
+argfunc (69)
+    on left: 71 72, on right: 68 69
+
+
 state 0
-	$accept : . programa $end  (0)
-	listaDeDeclaracoes : .  (3)
 
-	KW_CHAR  shift 1
-	KW_INT  shift 2
-	KW_FLOAT  shift 3
-	$end  reduce 3
+    0 $accept: . programa $end
 
-	programa  goto 4
-	listaDeDeclaracoes  goto 5
-	declaracoes  goto 6
-	tipo  goto 7
+    KW_CHAR   shift, and go to state 1
+    KW_INT    shift, and go to state 2
+    KW_FLOAT  shift, and go to state 3
+
+    $default  reduce using rule 3 (listaDeDeclaracoes)
+
+    programa            go to state 4
+    listaDeDeclaracoes  go to state 5
+    declaracoes         go to state 6
+    tipo                go to state 7
 
 
 state 1
-	tipo : KW_CHAR .  (9)
 
-	.  reduce 9
+    9 tipo: KW_CHAR .
+
+    $default  reduce using rule 9 (tipo)
 
 
 state 2
-	tipo : KW_INT .  (10)
 
-	.  reduce 10
+   10 tipo: KW_INT .
+
+    $default  reduce using rule 10 (tipo)
 
 
 state 3
-	tipo : KW_FLOAT .  (11)
 
-	.  reduce 11
+   11 tipo: KW_FLOAT .
+
+    $default  reduce using rule 11 (tipo)
 
 
 state 4
-	$accept : programa . $end  (0)
 
-	$end  accept
+    0 $accept: programa . $end
+
+    $end  shift, and go to state 8
 
 
 state 5
-	programa : listaDeDeclaracoes .  (1)
 
-	.  reduce 1
+    1 programa: listaDeDeclaracoes .
+
+    $default  reduce using rule 1 (programa)
 
 
 state 6
-	listaDeDeclaracoes : declaracoes . listaDeDeclaracoes  (2)
-	listaDeDeclaracoes : .  (3)
 
-	KW_CHAR  shift 1
-	KW_INT  shift 2
-	KW_FLOAT  shift 3
-	$end  reduce 3
+    2 listaDeDeclaracoes: declaracoes . listaDeDeclaracoes
 
-	listaDeDeclaracoes  goto 8
-	declaracoes  goto 6
-	tipo  goto 7
+    KW_CHAR   shift, and go to state 1
+    KW_INT    shift, and go to state 2
+    KW_FLOAT  shift, and go to state 3
+
+    $default  reduce using rule 3 (listaDeDeclaracoes)
+
+    listaDeDeclaracoes  go to state 9
+    declaracoes         go to state 6
+    tipo                go to state 7
 
 
 state 7
-	declaracoes : tipo . TK_IDENTIFIER '=' literal ';'  (4)
-	declaracoes : tipo . '#' TK_IDENTIFIER ';'  (5)
-	declaracoes : tipo . '#' TK_IDENTIFIER '=' literal ';'  (6)
-	declaracoes : tipo . TK_IDENTIFIER '[' literal ']' inicializacao ';'  (7)
-	declaracoes : tipo . TK_IDENTIFIER '(' listaDeParametros ')' bloco  (8)
 
-	TK_IDENTIFIER  shift 9
-	'#'  shift 10
-	.  error
+    4 declaracoes: tipo . TK_IDENTIFIER '=' literal ';'
+    5            | tipo . '#' TK_IDENTIFIER ';'
+    6            | tipo . '#' TK_IDENTIFIER '=' literal ';'
+    7            | tipo . TK_IDENTIFIER '[' literal ']' inicializacao ';'
+    8            | tipo . TK_IDENTIFIER '(' listaDeParametros ')' bloco
+
+    TK_IDENTIFIER  shift, and go to state 10
+    '#'            shift, and go to state 11
 
 
 state 8
-	listaDeDeclaracoes : declaracoes listaDeDeclaracoes .  (2)
 
-	.  reduce 2
+    0 $accept: programa $end .
+
+    $default  accept
 
 
 state 9
-	declaracoes : tipo TK_IDENTIFIER . '=' literal ';'  (4)
-	declaracoes : tipo TK_IDENTIFIER . '[' literal ']' inicializacao ';'  (7)
-	declaracoes : tipo TK_IDENTIFIER . '(' listaDeParametros ')' bloco  (8)
 
-	'='  shift 11
-	'['  shift 12
-	'('  shift 13
-	.  error
+    2 listaDeDeclaracoes: declaracoes listaDeDeclaracoes .
+
+    $default  reduce using rule 2 (listaDeDeclaracoes)
 
 
 state 10
-	declaracoes : tipo '#' . TK_IDENTIFIER ';'  (5)
-	declaracoes : tipo '#' . TK_IDENTIFIER '=' literal ';'  (6)
 
-	TK_IDENTIFIER  shift 14
-	.  error
+    4 declaracoes: tipo TK_IDENTIFIER . '=' literal ';'
+    7            | tipo TK_IDENTIFIER . '[' literal ']' inicializacao ';'
+    8            | tipo TK_IDENTIFIER . '(' listaDeParametros ')' bloco
+
+    '='  shift, and go to state 12
+    '['  shift, and go to state 13
+    '('  shift, and go to state 14
 
 
 state 11
-	declaracoes : tipo TK_IDENTIFIER '=' . literal ';'  (4)
 
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	.  error
+    5 declaracoes: tipo '#' . TK_IDENTIFIER ';'
+    6            | tipo '#' . TK_IDENTIFIER '=' literal ';'
 
-	literal  goto 19
+    TK_IDENTIFIER  shift, and go to state 15
 
 
 state 12
-	declaracoes : tipo TK_IDENTIFIER '[' . literal ']' inicializacao ';'  (7)
 
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	.  error
+    4 declaracoes: tipo TK_IDENTIFIER '=' . literal ';'
 
-	literal  goto 20
+    LIT_INTEGER  shift, and go to state 16
+    LIT_REAL     shift, and go to state 17
+    LIT_CHAR     shift, and go to state 18
+    LIT_STRING   shift, and go to state 19
+
+    literal  go to state 20
 
 
 state 13
-	declaracoes : tipo TK_IDENTIFIER '(' . listaDeParametros ')' bloco  (8)
-	parametro : .  (24)
 
-	KW_CHAR  shift 1
-	KW_INT  shift 2
-	KW_FLOAT  shift 3
-	')'  reduce 24
-	','  reduce 24
+    7 declaracoes: tipo TK_IDENTIFIER '[' . literal ']' inicializacao ';'
 
-	tipo  goto 21
-	listaDeParametros  goto 22
-	parametro  goto 23
+    LIT_INTEGER  shift, and go to state 16
+    LIT_REAL     shift, and go to state 17
+    LIT_CHAR     shift, and go to state 18
+    LIT_STRING   shift, and go to state 19
+
+    literal  go to state 21
 
 
 state 14
-	declaracoes : tipo '#' TK_IDENTIFIER . ';'  (5)
-	declaracoes : tipo '#' TK_IDENTIFIER . '=' literal ';'  (6)
 
-	'='  shift 24
-	';'  shift 25
-	.  error
+    8 declaracoes: tipo TK_IDENTIFIER '(' . listaDeParametros ')' bloco
+
+    KW_CHAR   shift, and go to state 1
+    KW_INT    shift, and go to state 2
+    KW_FLOAT  shift, and go to state 3
+
+    $default  reduce using rule 24 (parametro)
+
+    tipo               go to state 22
+    listaDeParametros  go to state 23
+    parametro          go to state 24
 
 
 state 15
-	literal : LIT_INTEGER .  (13)
 
-	.  reduce 13
+    5 declaracoes: tipo '#' TK_IDENTIFIER . ';'
+    6            | tipo '#' TK_IDENTIFIER . '=' literal ';'
+
+    '='  shift, and go to state 25
+    ';'  shift, and go to state 26
 
 
 state 16
-	literal : LIT_REAL .  (14)
 
-	.  reduce 14
+   13 literal: LIT_INTEGER .
+
+    $default  reduce using rule 13 (literal)
 
 
 state 17
-	literal : LIT_CHAR .  (12)
 
-	.  reduce 12
+   14 literal: LIT_REAL .
+
+    $default  reduce using rule 14 (literal)
 
 
 state 18
-	literal : LIT_STRING .  (15)
 
-	.  reduce 15
+   12 literal: LIT_CHAR .
+
+    $default  reduce using rule 12 (literal)
 
 
 state 19
-	declaracoes : tipo TK_IDENTIFIER '=' literal . ';'  (4)
 
-	';'  shift 26
-	.  error
+   15 literal: LIT_STRING .
+
+    $default  reduce using rule 15 (literal)
 
 
 state 20
-	declaracoes : tipo TK_IDENTIFIER '[' literal . ']' inicializacao ';'  (7)
 
-	']'  shift 27
-	.  error
+    4 declaracoes: tipo TK_IDENTIFIER '=' literal . ';'
+
+    ';'  shift, and go to state 27
 
 
 state 21
-	parametro : tipo . TK_IDENTIFIER  (23)
 
-	TK_IDENTIFIER  shift 28
-	.  error
+    7 declaracoes: tipo TK_IDENTIFIER '[' literal . ']' inicializacao ';'
+
+    ']'  shift, and go to state 28
 
 
 state 22
-	declaracoes : tipo TK_IDENTIFIER '(' listaDeParametros . ')' bloco  (8)
 
-	')'  shift 29
-	.  error
+   23 parametro: tipo . TK_IDENTIFIER
+
+    TK_IDENTIFIER  shift, and go to state 29
 
 
 state 23
-	listaDeParametros : parametro . fimDeParametros  (20)
-	fimDeParametros : .  (22)
 
-	','  shift 30
-	')'  reduce 22
+    8 declaracoes: tipo TK_IDENTIFIER '(' listaDeParametros . ')' bloco
 
-	fimDeParametros  goto 31
+    ')'  shift, and go to state 30
 
 
 state 24
-	declaracoes : tipo '#' TK_IDENTIFIER '=' . literal ';'  (6)
 
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	.  error
+   20 listaDeParametros: parametro . fimDeParametros
 
-	literal  goto 32
+    ','  shift, and go to state 31
+
+    $default  reduce using rule 22 (fimDeParametros)
+
+    fimDeParametros  go to state 32
 
 
 state 25
-	declaracoes : tipo '#' TK_IDENTIFIER ';' .  (5)
 
-	.  reduce 5
+    6 declaracoes: tipo '#' TK_IDENTIFIER '=' . literal ';'
+
+    LIT_INTEGER  shift, and go to state 16
+    LIT_REAL     shift, and go to state 17
+    LIT_CHAR     shift, and go to state 18
+    LIT_STRING   shift, and go to state 19
+
+    literal  go to state 33
 
 
 state 26
-	declaracoes : tipo TK_IDENTIFIER '=' literal ';' .  (4)
 
-	.  reduce 4
+    5 declaracoes: tipo '#' TK_IDENTIFIER ';' .
+
+    $default  reduce using rule 5 (declaracoes)
 
 
 state 27
-	declaracoes : tipo TK_IDENTIFIER '[' literal ']' . inicializacao ';'  (7)
-	inicializacao : .  (17)
 
-	':'  shift 33
-	';'  reduce 17
+    4 declaracoes: tipo TK_IDENTIFIER '=' literal ';' .
 
-	inicializacao  goto 34
+    $default  reduce using rule 4 (declaracoes)
 
 
 state 28
-	parametro : tipo TK_IDENTIFIER .  (23)
 
-	.  reduce 23
+    7 declaracoes: tipo TK_IDENTIFIER '[' literal ']' . inicializacao ';'
+
+    ':'  shift, and go to state 34
+
+    $default  reduce using rule 17 (inicializacao)
+
+    inicializacao  go to state 35
 
 
 state 29
-	declaracoes : tipo TK_IDENTIFIER '(' listaDeParametros ')' . bloco  (8)
 
-	'{'  shift 35
-	.  error
+   23 parametro: tipo TK_IDENTIFIER .
 
-	bloco  goto 36
+    $default  reduce using rule 23 (parametro)
 
 
 state 30
-	fimDeParametros : ',' . parametro fimDeParametros  (21)
-	parametro : .  (24)
 
-	KW_CHAR  shift 1
-	KW_INT  shift 2
-	KW_FLOAT  shift 3
-	')'  reduce 24
-	','  reduce 24
+    8 declaracoes: tipo TK_IDENTIFIER '(' listaDeParametros ')' . bloco
 
-	tipo  goto 21
-	parametro  goto 37
+    '{'  shift, and go to state 36
+
+    bloco  go to state 37
 
 
 state 31
-	listaDeParametros : parametro fimDeParametros .  (20)
 
-	.  reduce 20
+   21 fimDeParametros: ',' . parametro fimDeParametros
+
+    KW_CHAR   shift, and go to state 1
+    KW_INT    shift, and go to state 2
+    KW_FLOAT  shift, and go to state 3
+
+    $default  reduce using rule 24 (parametro)
+
+    tipo       go to state 22
+    parametro  go to state 38
 
 
 state 32
-	declaracoes : tipo '#' TK_IDENTIFIER '=' literal . ';'  (6)
 
-	';'  shift 38
-	.  error
+   20 listaDeParametros: parametro fimDeParametros .
+
+    $default  reduce using rule 20 (listaDeParametros)
 
 
 state 33
-	inicializacao : ':' . inicializacao2  (16)
-	inicializacao2 : .  (19)
 
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	';'  reduce 19
+    6 declaracoes: tipo '#' TK_IDENTIFIER '=' literal . ';'
 
-	literal  goto 39
-	inicializacao2  goto 40
+    ';'  shift, and go to state 39
 
 
 state 34
-	declaracoes : tipo TK_IDENTIFIER '[' literal ']' inicializacao . ';'  (7)
 
-	';'  shift 41
-	.  error
+   16 inicializacao: ':' . inicializacao2
+
+    LIT_INTEGER  shift, and go to state 16
+    LIT_REAL     shift, and go to state 17
+    LIT_CHAR     shift, and go to state 18
+    LIT_STRING   shift, and go to state 19
+
+    $default  reduce using rule 19 (inicializacao2)
+
+    literal         go to state 40
+    inicializacao2  go to state 41
 
 
 state 35
-	bloco : '{' . blocoDeComandos '}'  (25)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	';'  reduce 35
-	'}'  reduce 35
+    7 declaracoes: tipo TK_IDENTIFIER '[' literal ']' inicializacao . ';'
 
-	bloco  goto 51
-	blocoDeComandos  goto 52
-	comando  goto 53
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    ';'  shift, and go to state 42
 
 
 state 36
-	declaracoes : tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco .  (8)
 
-	.  reduce 8
+   25 bloco: '{' . blocoDeComandos '}'
+
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco            go to state 52
+    blocoDeComandos  go to state 53
+    comando          go to state 54
+    controleFluxo    go to state 55
+    atribuicao       go to state 56
 
 
 state 37
-	fimDeParametros : ',' parametro . fimDeParametros  (21)
-	fimDeParametros : .  (22)
 
-	','  shift 30
-	')'  reduce 22
+    8 declaracoes: tipo TK_IDENTIFIER '(' listaDeParametros ')' bloco .
 
-	fimDeParametros  goto 56
+    $default  reduce using rule 8 (declaracoes)
 
 
 state 38
-	declaracoes : tipo '#' TK_IDENTIFIER '=' literal ';' .  (6)
 
-	.  reduce 6
+   21 fimDeParametros: ',' parametro . fimDeParametros
+
+    ','  shift, and go to state 31
+
+    $default  reduce using rule 22 (fimDeParametros)
+
+    fimDeParametros  go to state 57
 
 
 state 39
-	inicializacao2 : literal . inicializacao2  (18)
-	inicializacao2 : .  (19)
 
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	';'  reduce 19
+    6 declaracoes: tipo '#' TK_IDENTIFIER '=' literal ';' .
 
-	literal  goto 39
-	inicializacao2  goto 57
+    $default  reduce using rule 6 (declaracoes)
 
 
 state 40
-	inicializacao : ':' inicializacao2 .  (16)
 
-	.  reduce 16
+   18 inicializacao2: literal . inicializacao2
+
+    LIT_INTEGER  shift, and go to state 16
+    LIT_REAL     shift, and go to state 17
+    LIT_CHAR     shift, and go to state 18
+    LIT_STRING   shift, and go to state 19
+
+    $default  reduce using rule 19 (inicializacao2)
+
+    literal         go to state 40
+    inicializacao2  go to state 58
 
 
 state 41
-	declaracoes : tipo TK_IDENTIFIER '[' literal ']' inicializacao ';' .  (7)
 
-	.  reduce 7
+   16 inicializacao: ':' inicializacao2 .
+
+    $default  reduce using rule 16 (inicializacao)
 
 
 state 42
-	controleFluxo : KW_IF . '(' expressao ')' KW_THEN comando  (36)
-	controleFluxo : KW_IF . '(' expressao ')' KW_THEN comando KW_ELSE comando  (39)
 
-	'('  shift 58
-	.  error
+    7 declaracoes: tipo TK_IDENTIFIER '[' literal ']' inicializacao ';' .
+
+    $default  reduce using rule 7 (declaracoes)
 
 
 state 43
-	controleFluxo : KW_WHILE . '(' expressao ')' comando  (37)
 
-	'('  shift 59
-	.  error
+   36 controleFluxo: KW_IF . '(' expressao ')' KW_THEN comando
+   39              | KW_IF . '(' expressao ')' KW_THEN comando KW_ELSE comando
+
+    '('  shift, and go to state 59
 
 
 state 44
-	controleFluxo : KW_FOR . '(' atribuicao KW_TO expressao ')' comando  (38)
 
-	'('  shift 60
-	.  error
+   37 controleFluxo: KW_WHILE . '(' expressao ')' comando
+
+    '('  shift, and go to state 60
 
 
 state 45
-	comando : KW_READ . TK_IDENTIFIER  (30)
 
-	TK_IDENTIFIER  shift 61
-	.  error
+   38 controleFluxo: KW_FOR . '(' atribuicao KW_TO expressao ')' comando
+
+    '('  shift, and go to state 61
 
 
 state 46
-	comando : KW_PRINT . argprint  (31)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   30 comando: KW_READ . TK_IDENTIFIER
 
-	literal  goto 67
-	argprint  goto 68
-	expressao  goto 69
+    TK_IDENTIFIER  shift, and go to state 62
 
 
 state 47
-	comando : KW_RETURN . expressao  (32)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   31 comando: KW_PRINT . argprint
 
-	literal  goto 67
-	expressao  goto 70
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    argprint   go to state 69
+    expressao  go to state 70
 
 
 state 48
-	atribuicao : TK_IDENTIFIER . '=' expressao  (40)
-	atribuicao : TK_IDENTIFIER . '[' expressao ']' '=' expressao  (43)
 
-	'='  shift 71
-	'['  shift 72
-	.  error
+   32 comando: KW_RETURN . expressao
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 71
 
 
 state 49
-	atribuicao : '#' . TK_IDENTIFIER '=' expressao  (41)
 
-	TK_IDENTIFIER  shift 73
-	.  error
+   40 atribuicao: TK_IDENTIFIER . '=' expressao
+   43           | TK_IDENTIFIER . '[' expressao ']' '=' expressao
+
+    '='  shift, and go to state 72
+    '['  shift, and go to state 73
 
 
 state 50
-	atribuicao : '&' . TK_IDENTIFIER '=' expressao  (42)
 
-	TK_IDENTIFIER  shift 74
-	.  error
+   41 atribuicao: '#' . TK_IDENTIFIER '=' expressao
+
+    TK_IDENTIFIER  shift, and go to state 74
 
 
 state 51
-	comando : bloco .  (29)
 
-	.  reduce 29
+   42 atribuicao: '&' . TK_IDENTIFIER '=' expressao
+
+    TK_IDENTIFIER  shift, and go to state 75
 
 
 state 52
-	bloco : '{' blocoDeComandos . '}'  (25)
 
-	'}'  shift 75
-	.  error
+   29 comando: bloco .
+
+    $default  reduce using rule 29 (comando)
 
 
 state 53
-	blocoDeComandos : comando . fimDeComando  (26)
-	fimDeComando : .  (28)
 
-	';'  shift 76
-	'}'  reduce 28
+   25 bloco: '{' blocoDeComandos . '}'
 
-	fimDeComando  goto 77
+    '}'  shift, and go to state 76
 
 
 state 54
-	comando : controleFluxo .  (34)
 
-	.  reduce 34
+   26 blocoDeComandos: comando . fimDeComando
+
+    ';'  shift, and go to state 77
+
+    $default  reduce using rule 28 (fimDeComando)
+
+    fimDeComando  go to state 78
 
 
 state 55
-	comando : atribuicao .  (33)
 
-	.  reduce 33
+   34 comando: controleFluxo .
+
+    $default  reduce using rule 34 (comando)
 
 
 state 56
-	fimDeParametros : ',' parametro fimDeParametros .  (21)
 
-	.  reduce 21
+   33 comando: atribuicao .
+
+    $default  reduce using rule 33 (comando)
 
 
 state 57
-	inicializacao2 : literal inicializacao2 .  (18)
 
-	.  reduce 18
+   21 fimDeParametros: ',' parametro fimDeParametros .
+
+    $default  reduce using rule 21 (fimDeParametros)
 
 
 state 58
-	controleFluxo : KW_IF '(' . expressao ')' KW_THEN comando  (36)
-	controleFluxo : KW_IF '(' . expressao ')' KW_THEN comando KW_ELSE comando  (39)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   18 inicializacao2: literal inicializacao2 .
 
-	literal  goto 67
-	expressao  goto 78
+    $default  reduce using rule 18 (inicializacao2)
 
 
 state 59
-	controleFluxo : KW_WHILE '(' . expressao ')' comando  (37)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   36 controleFluxo: KW_IF '(' . expressao ')' KW_THEN comando
+   39              | KW_IF '(' . expressao ')' KW_THEN comando KW_ELSE comando
 
-	literal  goto 67
-	expressao  goto 79
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 79
 
 
 state 60
-	controleFluxo : KW_FOR '(' . atribuicao KW_TO expressao ')' comando  (38)
 
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'&'  shift 50
-	.  error
+   37 controleFluxo: KW_WHILE '(' . expressao ')' comando
 
-	atribuicao  goto 80
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 80
 
 
 state 61
-	comando : KW_READ TK_IDENTIFIER .  (30)
 
-	.  reduce 30
+   38 controleFluxo: KW_FOR '(' . atribuicao KW_TO expressao ')' comando
+
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '&'            shift, and go to state 51
+
+    atribuicao  go to state 81
 
 
-62: shift/reduce conflict (shift 82, reduce 47) on '('
 state 62
-	expressao : TK_IDENTIFIER .  (47)
-	expressao : TK_IDENTIFIER . '[' expressao ']'  (50)
-	expressao : TK_IDENTIFIER . '(' listaDeArgumentos ')'  (67)
 
-	'['  shift 81
-	'('  shift 82
-	KW_ELSE  reduce 47
-	KW_TO  reduce 47
-	OPERATOR_LE  reduce 47
-	OPERATOR_GE  reduce 47
-	OPERATOR_EQ  reduce 47
-	OPERATOR_NE  reduce 47
-	OPERATOR_AND  reduce 47
-	OPERATOR_OR  reduce 47
-	TK_IDENTIFIER  reduce 47
-	LIT_INTEGER  reduce 47
-	LIT_REAL  reduce 47
-	LIT_CHAR  reduce 47
-	LIT_STRING  reduce 47
-	'+'  reduce 47
-	'-'  reduce 47
-	'*'  reduce 47
-	'/'  reduce 47
-	'%'  reduce 47
-	'!'  reduce 47
-	'<'  reduce 47
-	'>'  reduce 47
-	';'  reduce 47
-	'#'  reduce 47
-	']'  reduce 47
-	')'  reduce 47
-	','  reduce 47
-	'}'  reduce 47
-	'&'  reduce 47
+   30 comando: KW_READ TK_IDENTIFIER .
+
+    $default  reduce using rule 30 (comando)
 
 
 state 63
-	expressao : '!' . expressao  (60)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   47 expressao: TK_IDENTIFIER .
+   50          | TK_IDENTIFIER . '[' expressao ']'
+   67          | TK_IDENTIFIER . '(' listaDeArgumentos ')'
 
-	literal  goto 67
-	expressao  goto 83
+    '['  shift, and go to state 82
+    '('  shift, and go to state 83
+
+    '('       [reduce using rule 47 (expressao)]
+    $default  reduce using rule 47 (expressao)
 
 
 state 64
-	expressao : '#' . TK_IDENTIFIER  (48)
 
-	TK_IDENTIFIER  shift 84
-	.  error
+   60 expressao: '!' . expressao
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 84
 
 
 state 65
-	expressao : '(' . expressao ')'  (51)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   48 expressao: '#' . TK_IDENTIFIER
 
-	literal  goto 67
-	expressao  goto 85
+    TK_IDENTIFIER  shift, and go to state 85
 
 
 state 66
-	expressao : '&' . TK_IDENTIFIER  (49)
 
-	TK_IDENTIFIER  shift 86
-	.  error
+   51 expressao: '(' . expressao ')'
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 86
 
 
 state 67
-	expressao : literal .  (52)
 
-	.  reduce 52
+   49 expressao: '&' . TK_IDENTIFIER
+
+    TK_IDENTIFIER  shift, and go to state 87
 
 
 state 68
-	comando : KW_PRINT argprint .  (31)
 
-	.  reduce 31
+   52 expressao: literal .
+
+    $default  reduce using rule 52 (expressao)
 
 
 state 69
-	argprint : expressao . argprint2  (44)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
-	argprint2 : .  (46)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'!'  shift 63
-	'<'  shift 98
-	'>'  shift 99
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	KW_ELSE  reduce 46
-	';'  reduce 46
-	'}'  reduce 46
+   31 comando: KW_PRINT argprint .
 
-	literal  goto 67
-	argprint2  goto 100
-	expressao  goto 101
+    $default  reduce using rule 31 (comando)
 
 
 state 70
-	comando : KW_RETURN expressao .  (32)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	KW_ELSE  reduce 32
-	';'  reduce 32
-	'}'  reduce 32
+   44 argprint: expressao . argprint2
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE    shift, and go to state 88
+    OPERATOR_GE    shift, and go to state 89
+    OPERATOR_EQ    shift, and go to state 90
+    OPERATOR_NE    shift, and go to state 91
+    OPERATOR_AND   shift, and go to state 92
+    OPERATOR_OR    shift, and go to state 93
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '+'            shift, and go to state 94
+    '-'            shift, and go to state 95
+    '*'            shift, and go to state 96
+    '/'            shift, and go to state 97
+    '%'            shift, and go to state 98
+    '!'            shift, and go to state 64
+    '<'            shift, and go to state 99
+    '>'            shift, and go to state 100
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    $default  reduce using rule 46 (argprint2)
+
+    literal    go to state 68
+    argprint2  go to state 101
+    expressao  go to state 102
 
 
 state 71
-	atribuicao : TK_IDENTIFIER '=' . expressao  (40)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   32 comando: KW_RETURN expressao .
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
 
-	literal  goto 67
-	expressao  goto 102
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 32 (comando)
 
 
 state 72
-	atribuicao : TK_IDENTIFIER '[' . expressao ']' '=' expressao  (43)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   40 atribuicao: TK_IDENTIFIER '=' . expressao
 
-	literal  goto 67
-	expressao  goto 103
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 103
 
 
 state 73
-	atribuicao : '#' TK_IDENTIFIER . '=' expressao  (41)
 
-	'='  shift 104
-	.  error
+   43 atribuicao: TK_IDENTIFIER '[' . expressao ']' '=' expressao
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 104
 
 
 state 74
-	atribuicao : '&' TK_IDENTIFIER . '=' expressao  (42)
 
-	'='  shift 105
-	.  error
+   41 atribuicao: '#' TK_IDENTIFIER . '=' expressao
+
+    '='  shift, and go to state 105
 
 
 state 75
-	bloco : '{' blocoDeComandos '}' .  (25)
 
-	.  reduce 25
+   42 atribuicao: '&' TK_IDENTIFIER . '=' expressao
+
+    '='  shift, and go to state 106
 
 
 state 76
-	fimDeComando : ';' . comando fimDeComando  (27)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	';'  reduce 35
-	'}'  reduce 35
+   25 bloco: '{' blocoDeComandos '}' .
 
-	bloco  goto 51
-	comando  goto 106
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    $default  reduce using rule 25 (bloco)
 
 
 state 77
-	blocoDeComandos : comando fimDeComando .  (26)
 
-	.  reduce 26
+   27 fimDeComando: ';' . comando fimDeComando
+
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco          go to state 52
+    comando        go to state 107
+    controleFluxo  go to state 55
+    atribuicao     go to state 56
 
 
 state 78
-	controleFluxo : KW_IF '(' expressao . ')' KW_THEN comando  (36)
-	controleFluxo : KW_IF '(' expressao . ')' KW_THEN comando KW_ELSE comando  (39)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	')'  shift 107
-	.  error
+   26 blocoDeComandos: comando fimDeComando .
+
+    $default  reduce using rule 26 (blocoDeComandos)
 
 
 state 79
-	controleFluxo : KW_WHILE '(' expressao . ')' comando  (37)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	')'  shift 108
-	.  error
+   36 controleFluxo: KW_IF '(' expressao . ')' KW_THEN comando
+   39              | KW_IF '(' expressao . ')' KW_THEN comando KW_ELSE comando
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ')'           shift, and go to state 108
 
 
 state 80
-	controleFluxo : KW_FOR '(' atribuicao . KW_TO expressao ')' comando  (38)
 
-	KW_TO  shift 109
-	.  error
+   37 controleFluxo: KW_WHILE '(' expressao . ')' comando
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ')'           shift, and go to state 109
 
 
 state 81
-	expressao : TK_IDENTIFIER '[' . expressao ']'  (50)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   38 controleFluxo: KW_FOR '(' atribuicao . KW_TO expressao ')' comando
 
-	literal  goto 67
-	expressao  goto 110
+    KW_TO  shift, and go to state 110
 
 
 state 82
-	expressao : TK_IDENTIFIER '(' . listaDeArgumentos ')'  (67)
-	argfunc : .  (72)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	')'  reduce 72
-	','  reduce 72
+   50 expressao: TK_IDENTIFIER '[' . expressao ']'
 
-	literal  goto 67
-	expressao  goto 111
-	listaDeArgumentos  goto 112
-	argfunc  goto 113
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 111
 
 
 state 83
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : '!' expressao .  (60)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 60
-	KW_TO  reduce 60
-	TK_IDENTIFIER  reduce 60
-	LIT_INTEGER  reduce 60
-	LIT_REAL  reduce 60
-	LIT_CHAR  reduce 60
-	LIT_STRING  reduce 60
-	'+'  reduce 60
-	'-'  reduce 60
-	'*'  reduce 60
-	'/'  reduce 60
-	'%'  reduce 60
-	'!'  reduce 60
-	'<'  reduce 60
-	'>'  reduce 60
-	';'  reduce 60
-	'#'  reduce 60
-	']'  reduce 60
-	'('  reduce 60
-	')'  reduce 60
-	','  reduce 60
-	'}'  reduce 60
-	'&'  reduce 60
+   67 expressao: TK_IDENTIFIER '(' . listaDeArgumentos ')'
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    $default  reduce using rule 72 (argfunc)
+
+    literal            go to state 68
+    expressao          go to state 112
+    listaDeArgumentos  go to state 113
+    argfunc            go to state 114
 
 
 state 84
-	expressao : '#' TK_IDENTIFIER .  (48)
 
-	.  reduce 48
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   60          | '!' expressao .
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 60 (expressao)
 
 
 state 85
-	expressao : '(' expressao . ')'  (51)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	')'  shift 114
-	.  error
+   48 expressao: '#' TK_IDENTIFIER .
+
+    $default  reduce using rule 48 (expressao)
 
 
 state 86
-	expressao : '&' TK_IDENTIFIER .  (49)
 
-	.  reduce 49
+   51 expressao: '(' expressao . ')'
+   53          | expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ')'           shift, and go to state 115
 
 
 state 87
-	expressao : expressao OPERATOR_LE . expressao  (61)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   49 expressao: '&' TK_IDENTIFIER .
 
-	literal  goto 67
-	expressao  goto 115
+    $default  reduce using rule 49 (expressao)
 
 
 state 88
-	expressao : expressao OPERATOR_GE . expressao  (62)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   61 expressao: expressao OPERATOR_LE . expressao
 
-	literal  goto 67
-	expressao  goto 116
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 116
 
 
 state 89
-	expressao : expressao OPERATOR_EQ . expressao  (63)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   62 expressao: expressao OPERATOR_GE . expressao
 
-	literal  goto 67
-	expressao  goto 117
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 117
 
 
 state 90
-	expressao : expressao OPERATOR_NE . expressao  (64)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   63 expressao: expressao OPERATOR_EQ . expressao
 
-	literal  goto 67
-	expressao  goto 118
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 118
 
 
 state 91
-	expressao : expressao OPERATOR_AND . expressao  (65)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   64 expressao: expressao OPERATOR_NE . expressao
 
-	literal  goto 67
-	expressao  goto 119
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 119
 
 
 state 92
-	expressao : expressao OPERATOR_OR . expressao  (66)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   65 expressao: expressao OPERATOR_AND . expressao
 
-	literal  goto 67
-	expressao  goto 120
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 120
 
 
 state 93
-	expressao : expressao '+' . expressao  (53)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   66 expressao: expressao OPERATOR_OR . expressao
 
-	literal  goto 67
-	expressao  goto 121
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 121
 
 
 state 94
-	expressao : expressao '-' . expressao  (54)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   53 expressao: expressao '+' . expressao
 
-	literal  goto 67
-	expressao  goto 122
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 122
 
 
 state 95
-	expressao : expressao '*' . expressao  (55)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   54 expressao: expressao '-' . expressao
 
-	literal  goto 67
-	expressao  goto 123
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 123
 
 
 state 96
-	expressao : expressao '/' . expressao  (56)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   55 expressao: expressao '*' . expressao
 
-	literal  goto 67
-	expressao  goto 124
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 124
 
 
 state 97
-	expressao : expressao '%' . expressao  (57)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   56 expressao: expressao '/' . expressao
 
-	literal  goto 67
-	expressao  goto 125
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 125
 
 
 state 98
-	expressao : expressao '<' . expressao  (59)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   57 expressao: expressao '%' . expressao
 
-	literal  goto 67
-	expressao  goto 126
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 126
 
 
 state 99
-	expressao : expressao '>' . expressao  (58)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   59 expressao: expressao '<' . expressao
 
-	literal  goto 67
-	expressao  goto 127
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 127
 
 
 state 100
-	argprint : expressao argprint2 .  (44)
 
-	.  reduce 44
+   58 expressao: expressao '>' . expressao
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 128
 
 
 state 101
-	argprint2 : expressao . argprint2  (45)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
-	argprint2 : .  (46)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'!'  shift 63
-	'<'  shift 98
-	'>'  shift 99
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	KW_ELSE  reduce 46
-	';'  reduce 46
-	'}'  reduce 46
+   44 argprint: expressao argprint2 .
 
-	literal  goto 67
-	argprint2  goto 128
-	expressao  goto 101
+    $default  reduce using rule 44 (argprint)
 
 
 state 102
-	atribuicao : TK_IDENTIFIER '=' expressao .  (40)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	KW_ELSE  reduce 40
-	KW_TO  reduce 40
-	';'  reduce 40
-	'}'  reduce 40
+   45 argprint2: expressao . argprint2
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE    shift, and go to state 88
+    OPERATOR_GE    shift, and go to state 89
+    OPERATOR_EQ    shift, and go to state 90
+    OPERATOR_NE    shift, and go to state 91
+    OPERATOR_AND   shift, and go to state 92
+    OPERATOR_OR    shift, and go to state 93
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '+'            shift, and go to state 94
+    '-'            shift, and go to state 95
+    '*'            shift, and go to state 96
+    '/'            shift, and go to state 97
+    '%'            shift, and go to state 98
+    '!'            shift, and go to state 64
+    '<'            shift, and go to state 99
+    '>'            shift, and go to state 100
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    $default  reduce using rule 46 (argprint2)
+
+    literal    go to state 68
+    argprint2  go to state 129
+    expressao  go to state 102
 
 
 state 103
-	atribuicao : TK_IDENTIFIER '[' expressao . ']' '=' expressao  (43)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	']'  shift 129
-	.  error
+   40 atribuicao: TK_IDENTIFIER '=' expressao .
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 40 (atribuicao)
 
 
 state 104
-	atribuicao : '#' TK_IDENTIFIER '=' . expressao  (41)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   43 atribuicao: TK_IDENTIFIER '[' expressao . ']' '=' expressao
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
 
-	literal  goto 67
-	expressao  goto 130
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ']'           shift, and go to state 130
 
 
 state 105
-	atribuicao : '&' TK_IDENTIFIER '=' . expressao  (42)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   41 atribuicao: '#' TK_IDENTIFIER '=' . expressao
 
-	literal  goto 67
-	expressao  goto 131
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 131
 
 
 state 106
-	fimDeComando : ';' comando . fimDeComando  (27)
-	fimDeComando : .  (28)
 
-	';'  shift 76
-	'}'  reduce 28
+   42 atribuicao: '&' TK_IDENTIFIER '=' . expressao
 
-	fimDeComando  goto 132
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 132
 
 
 state 107
-	controleFluxo : KW_IF '(' expressao ')' . KW_THEN comando  (36)
-	controleFluxo : KW_IF '(' expressao ')' . KW_THEN comando KW_ELSE comando  (39)
 
-	KW_THEN  shift 133
-	.  error
+   27 fimDeComando: ';' comando . fimDeComando
+
+    ';'  shift, and go to state 77
+
+    $default  reduce using rule 28 (fimDeComando)
+
+    fimDeComando  go to state 133
 
 
 state 108
-	controleFluxo : KW_WHILE '(' expressao ')' . comando  (37)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	KW_ELSE  reduce 35
-	';'  reduce 35
-	'}'  reduce 35
+   36 controleFluxo: KW_IF '(' expressao ')' . KW_THEN comando
+   39              | KW_IF '(' expressao ')' . KW_THEN comando KW_ELSE comando
 
-	bloco  goto 51
-	comando  goto 134
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    KW_THEN  shift, and go to state 134
 
 
 state 109
-	controleFluxo : KW_FOR '(' atribuicao KW_TO . expressao ')' comando  (38)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   37 controleFluxo: KW_WHILE '(' expressao ')' . comando
 
-	literal  goto 67
-	expressao  goto 135
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco          go to state 52
+    comando        go to state 135
+    controleFluxo  go to state 55
+    atribuicao     go to state 56
 
 
 state 110
-	expressao : TK_IDENTIFIER '[' expressao . ']'  (50)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	']'  shift 136
-	.  error
+   38 controleFluxo: KW_FOR '(' atribuicao KW_TO . expressao ')' comando
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 136
 
 
 state 111
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
-	argfunc : expressao .  (71)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	')'  reduce 71
-	','  reduce 71
+   50 expressao: TK_IDENTIFIER '[' expressao . ']'
+   53          | expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ']'           shift, and go to state 137
 
 
 state 112
-	expressao : TK_IDENTIFIER '(' listaDeArgumentos . ')'  (67)
 
-	')'  shift 137
-	.  error
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+   71 argfunc: expressao .
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 71 (argfunc)
 
 
 state 113
-	listaDeArgumentos : argfunc . fimDeArgumentos  (68)
-	fimDeArgumentos : .  (70)
 
-	','  shift 138
-	')'  reduce 70
+   67 expressao: TK_IDENTIFIER '(' listaDeArgumentos . ')'
 
-	fimDeArgumentos  goto 139
+    ')'  shift, and go to state 138
 
 
 state 114
-	expressao : '(' expressao ')' .  (51)
 
-	.  reduce 51
+   68 listaDeArgumentos: argfunc . fimDeArgumentos
+
+    ','  shift, and go to state 139
+
+    $default  reduce using rule 70 (fimDeArgumentos)
+
+    fimDeArgumentos  go to state 140
 
 
 state 115
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao OPERATOR_LE expressao .  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	.  reduce 61
+   51 expressao: '(' expressao ')' .
+
+    $default  reduce using rule 51 (expressao)
 
 
 state 116
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao OPERATOR_GE expressao .  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	.  reduce 62
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   61          | expressao OPERATOR_LE expressao .
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    $default  reduce using rule 61 (expressao)
 
 
 state 117
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao OPERATOR_EQ expressao .  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	.  reduce 63
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   62          | expressao OPERATOR_GE expressao .
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    $default  reduce using rule 62 (expressao)
 
 
 state 118
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao OPERATOR_NE expressao .  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	.  reduce 64
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   63          | expressao OPERATOR_EQ expressao .
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    $default  reduce using rule 63 (expressao)
 
 
 state 119
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao OPERATOR_AND expressao .  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	.  reduce 65
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   64          | expressao OPERATOR_NE expressao .
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    $default  reduce using rule 64 (expressao)
 
 
 state 120
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
-	expressao : expressao OPERATOR_OR expressao .  (66)
 
-	.  reduce 66
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   65          | expressao OPERATOR_AND expressao .
+   66          | expressao . OPERATOR_OR expressao
+
+    $default  reduce using rule 65 (expressao)
 
 
 state 121
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao '+' expressao .  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 53
-	KW_TO  reduce 53
-	TK_IDENTIFIER  reduce 53
-	LIT_INTEGER  reduce 53
-	LIT_REAL  reduce 53
-	LIT_CHAR  reduce 53
-	LIT_STRING  reduce 53
-	'+'  reduce 53
-	'-'  reduce 53
-	'*'  reduce 53
-	'/'  reduce 53
-	'%'  reduce 53
-	'!'  reduce 53
-	'<'  reduce 53
-	'>'  reduce 53
-	';'  reduce 53
-	'#'  reduce 53
-	']'  reduce 53
-	'('  reduce 53
-	')'  reduce 53
-	','  reduce 53
-	'}'  reduce 53
-	'&'  reduce 53
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+   66          | expressao OPERATOR_OR expressao .
+
+    $default  reduce using rule 66 (expressao)
 
 
 state 122
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao '-' expressao .  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 54
-	KW_TO  reduce 54
-	TK_IDENTIFIER  reduce 54
-	LIT_INTEGER  reduce 54
-	LIT_REAL  reduce 54
-	LIT_CHAR  reduce 54
-	LIT_STRING  reduce 54
-	'+'  reduce 54
-	'-'  reduce 54
-	'*'  reduce 54
-	'/'  reduce 54
-	'%'  reduce 54
-	'!'  reduce 54
-	'<'  reduce 54
-	'>'  reduce 54
-	';'  reduce 54
-	'#'  reduce 54
-	']'  reduce 54
-	'('  reduce 54
-	')'  reduce 54
-	','  reduce 54
-	'}'  reduce 54
-	'&'  reduce 54
+   53 expressao: expressao . '+' expressao
+   53          | expressao '+' expressao .
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 53 (expressao)
 
 
 state 123
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao '*' expressao .  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 55
-	KW_TO  reduce 55
-	TK_IDENTIFIER  reduce 55
-	LIT_INTEGER  reduce 55
-	LIT_REAL  reduce 55
-	LIT_CHAR  reduce 55
-	LIT_STRING  reduce 55
-	'+'  reduce 55
-	'-'  reduce 55
-	'*'  reduce 55
-	'/'  reduce 55
-	'%'  reduce 55
-	'!'  reduce 55
-	'<'  reduce 55
-	'>'  reduce 55
-	';'  reduce 55
-	'#'  reduce 55
-	']'  reduce 55
-	'('  reduce 55
-	')'  reduce 55
-	','  reduce 55
-	'}'  reduce 55
-	'&'  reduce 55
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   54          | expressao '-' expressao .
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 54 (expressao)
 
 
 state 124
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao '/' expressao .  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 56
-	KW_TO  reduce 56
-	TK_IDENTIFIER  reduce 56
-	LIT_INTEGER  reduce 56
-	LIT_REAL  reduce 56
-	LIT_CHAR  reduce 56
-	LIT_STRING  reduce 56
-	'+'  reduce 56
-	'-'  reduce 56
-	'*'  reduce 56
-	'/'  reduce 56
-	'%'  reduce 56
-	'!'  reduce 56
-	'<'  reduce 56
-	'>'  reduce 56
-	';'  reduce 56
-	'#'  reduce 56
-	']'  reduce 56
-	'('  reduce 56
-	')'  reduce 56
-	','  reduce 56
-	'}'  reduce 56
-	'&'  reduce 56
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   55          | expressao '*' expressao .
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 55 (expressao)
 
 
 state 125
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao '%' expressao .  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 57
-	KW_TO  reduce 57
-	TK_IDENTIFIER  reduce 57
-	LIT_INTEGER  reduce 57
-	LIT_REAL  reduce 57
-	LIT_CHAR  reduce 57
-	LIT_STRING  reduce 57
-	'+'  reduce 57
-	'-'  reduce 57
-	'*'  reduce 57
-	'/'  reduce 57
-	'%'  reduce 57
-	'!'  reduce 57
-	'<'  reduce 57
-	'>'  reduce 57
-	';'  reduce 57
-	'#'  reduce 57
-	']'  reduce 57
-	'('  reduce 57
-	')'  reduce 57
-	','  reduce 57
-	'}'  reduce 57
-	'&'  reduce 57
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   56          | expressao '/' expressao .
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 56 (expressao)
 
 
 state 126
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao '<' expressao .  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 59
-	KW_TO  reduce 59
-	TK_IDENTIFIER  reduce 59
-	LIT_INTEGER  reduce 59
-	LIT_REAL  reduce 59
-	LIT_CHAR  reduce 59
-	LIT_STRING  reduce 59
-	'+'  reduce 59
-	'-'  reduce 59
-	'*'  reduce 59
-	'/'  reduce 59
-	'%'  reduce 59
-	'!'  reduce 59
-	'<'  reduce 59
-	'>'  reduce 59
-	';'  reduce 59
-	'#'  reduce 59
-	']'  reduce 59
-	'('  reduce 59
-	')'  reduce 59
-	','  reduce 59
-	'}'  reduce 59
-	'&'  reduce 59
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   57          | expressao '%' expressao .
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 57 (expressao)
 
 
 state 127
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao '>' expressao .  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	KW_ELSE  reduce 58
-	KW_TO  reduce 58
-	TK_IDENTIFIER  reduce 58
-	LIT_INTEGER  reduce 58
-	LIT_REAL  reduce 58
-	LIT_CHAR  reduce 58
-	LIT_STRING  reduce 58
-	'+'  reduce 58
-	'-'  reduce 58
-	'*'  reduce 58
-	'/'  reduce 58
-	'%'  reduce 58
-	'!'  reduce 58
-	'<'  reduce 58
-	'>'  reduce 58
-	';'  reduce 58
-	'#'  reduce 58
-	']'  reduce 58
-	'('  reduce 58
-	')'  reduce 58
-	','  reduce 58
-	'}'  reduce 58
-	'&'  reduce 58
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   59          | expressao '<' expressao .
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 59 (expressao)
 
 
 state 128
-	argprint2 : expressao argprint2 .  (45)
 
-	.  reduce 45
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   58          | expressao '>' expressao .
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+
+    $default  reduce using rule 58 (expressao)
 
 
 state 129
-	atribuicao : TK_IDENTIFIER '[' expressao ']' . '=' expressao  (43)
 
-	'='  shift 140
-	.  error
+   45 argprint2: expressao argprint2 .
+
+    $default  reduce using rule 45 (argprint2)
 
 
 state 130
-	atribuicao : '#' TK_IDENTIFIER '=' expressao .  (41)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	KW_ELSE  reduce 41
-	KW_TO  reduce 41
-	';'  reduce 41
-	'}'  reduce 41
+   43 atribuicao: TK_IDENTIFIER '[' expressao ']' . '=' expressao
+
+    '='  shift, and go to state 141
 
 
 state 131
-	atribuicao : '&' TK_IDENTIFIER '=' expressao .  (42)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	KW_ELSE  reduce 42
-	KW_TO  reduce 42
-	';'  reduce 42
-	'}'  reduce 42
+   41 atribuicao: '#' TK_IDENTIFIER '=' expressao .
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 41 (atribuicao)
 
 
 state 132
-	fimDeComando : ';' comando fimDeComando .  (27)
 
-	.  reduce 27
+   42 atribuicao: '&' TK_IDENTIFIER '=' expressao .
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 42 (atribuicao)
 
 
 state 133
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN . comando  (36)
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN . comando KW_ELSE comando  (39)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	KW_ELSE  reduce 35
-	';'  reduce 35
-	'}'  reduce 35
+   27 fimDeComando: ';' comando fimDeComando .
 
-	bloco  goto 51
-	comando  goto 141
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    $default  reduce using rule 27 (fimDeComando)
 
 
 state 134
-	controleFluxo : KW_WHILE '(' expressao ')' comando .  (37)
 
-	.  reduce 37
+   36 controleFluxo: KW_IF '(' expressao ')' KW_THEN . comando
+   39              | KW_IF '(' expressao ')' KW_THEN . comando KW_ELSE comando
+
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco          go to state 52
+    comando        go to state 142
+    controleFluxo  go to state 55
+    atribuicao     go to state 56
 
 
 state 135
-	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao . ')' comando  (38)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	')'  shift 142
-	.  error
+   37 controleFluxo: KW_WHILE '(' expressao ')' comando .
+
+    $default  reduce using rule 37 (controleFluxo)
 
 
 state 136
-	expressao : TK_IDENTIFIER '[' expressao ']' .  (50)
 
-	.  reduce 50
+   38 controleFluxo: KW_FOR '(' atribuicao KW_TO expressao . ')' comando
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
+
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+    ')'           shift, and go to state 143
 
 
 state 137
-	expressao : TK_IDENTIFIER '(' listaDeArgumentos ')' .  (67)
 
-	.  reduce 67
+   50 expressao: TK_IDENTIFIER '[' expressao ']' .
+
+    $default  reduce using rule 50 (expressao)
 
 
 state 138
-	fimDeArgumentos : ',' . argfunc fimDeArgumentos  (69)
-	argfunc : .  (72)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	')'  reduce 72
-	','  reduce 72
+   67 expressao: TK_IDENTIFIER '(' listaDeArgumentos ')' .
 
-	literal  goto 67
-	expressao  goto 111
-	argfunc  goto 143
+    $default  reduce using rule 67 (expressao)
 
 
 state 139
-	listaDeArgumentos : argfunc fimDeArgumentos .  (68)
 
-	.  reduce 68
+   69 fimDeArgumentos: ',' . argfunc fimDeArgumentos
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    $default  reduce using rule 72 (argfunc)
+
+    literal    go to state 68
+    expressao  go to state 112
+    argfunc    go to state 144
 
 
 state 140
-	atribuicao : TK_IDENTIFIER '[' expressao ']' '=' . expressao  (43)
 
-	TK_IDENTIFIER  shift 62
-	LIT_INTEGER  shift 15
-	LIT_REAL  shift 16
-	LIT_CHAR  shift 17
-	LIT_STRING  shift 18
-	'!'  shift 63
-	'#'  shift 64
-	'('  shift 65
-	'&'  shift 66
-	.  error
+   68 listaDeArgumentos: argfunc fimDeArgumentos .
 
-	literal  goto 67
-	expressao  goto 144
+    $default  reduce using rule 68 (listaDeArgumentos)
 
 
-141: shift/reduce conflict (shift 145, reduce 36) on KW_ELSE
 state 141
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN comando .  (36)
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN comando . KW_ELSE comando  (39)
 
-	KW_ELSE  shift 145
-	';'  reduce 36
-	'}'  reduce 36
+   43 atribuicao: TK_IDENTIFIER '[' expressao ']' '=' . expressao
+
+    TK_IDENTIFIER  shift, and go to state 63
+    LIT_INTEGER    shift, and go to state 16
+    LIT_REAL       shift, and go to state 17
+    LIT_CHAR       shift, and go to state 18
+    LIT_STRING     shift, and go to state 19
+    '!'            shift, and go to state 64
+    '#'            shift, and go to state 65
+    '('            shift, and go to state 66
+    '&'            shift, and go to state 67
+
+    literal    go to state 68
+    expressao  go to state 145
 
 
 state 142
-	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao ')' . comando  (38)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	KW_ELSE  reduce 35
-	';'  reduce 35
-	'}'  reduce 35
+   36 controleFluxo: KW_IF '(' expressao ')' KW_THEN comando .
+   39              | KW_IF '(' expressao ')' KW_THEN comando . KW_ELSE comando
 
-	bloco  goto 51
-	comando  goto 146
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    KW_ELSE  shift, and go to state 146
+
+    KW_ELSE   [reduce using rule 36 (controleFluxo)]
+    $default  reduce using rule 36 (controleFluxo)
 
 
 state 143
-	fimDeArgumentos : ',' argfunc . fimDeArgumentos  (69)
-	fimDeArgumentos : .  (70)
 
-	','  shift 138
-	')'  reduce 70
+   38 controleFluxo: KW_FOR '(' atribuicao KW_TO expressao ')' . comando
 
-	fimDeArgumentos  goto 147
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco          go to state 52
+    comando        go to state 147
+    controleFluxo  go to state 55
+    atribuicao     go to state 56
 
 
 state 144
-	atribuicao : TK_IDENTIFIER '[' expressao ']' '=' expressao .  (43)
-	expressao : expressao . '+' expressao  (53)
-	expressao : expressao . '-' expressao  (54)
-	expressao : expressao . '*' expressao  (55)
-	expressao : expressao . '/' expressao  (56)
-	expressao : expressao . '%' expressao  (57)
-	expressao : expressao . '>' expressao  (58)
-	expressao : expressao . '<' expressao  (59)
-	expressao : expressao . OPERATOR_LE expressao  (61)
-	expressao : expressao . OPERATOR_GE expressao  (62)
-	expressao : expressao . OPERATOR_EQ expressao  (63)
-	expressao : expressao . OPERATOR_NE expressao  (64)
-	expressao : expressao . OPERATOR_AND expressao  (65)
-	expressao : expressao . OPERATOR_OR expressao  (66)
 
-	OPERATOR_LE  shift 87
-	OPERATOR_GE  shift 88
-	OPERATOR_EQ  shift 89
-	OPERATOR_NE  shift 90
-	OPERATOR_AND  shift 91
-	OPERATOR_OR  shift 92
-	'+'  shift 93
-	'-'  shift 94
-	'*'  shift 95
-	'/'  shift 96
-	'%'  shift 97
-	'<'  shift 98
-	'>'  shift 99
-	KW_ELSE  reduce 43
-	KW_TO  reduce 43
-	';'  reduce 43
-	'}'  reduce 43
+   69 fimDeArgumentos: ',' argfunc . fimDeArgumentos
+
+    ','  shift, and go to state 139
+
+    $default  reduce using rule 70 (fimDeArgumentos)
+
+    fimDeArgumentos  go to state 148
 
 
 state 145
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN comando KW_ELSE . comando  (39)
-	comando : .  (35)
 
-	KW_IF  shift 42
-	KW_WHILE  shift 43
-	KW_FOR  shift 44
-	KW_READ  shift 45
-	KW_PRINT  shift 46
-	KW_RETURN  shift 47
-	TK_IDENTIFIER  shift 48
-	'#'  shift 49
-	'{'  shift 35
-	'&'  shift 50
-	KW_ELSE  reduce 35
-	';'  reduce 35
-	'}'  reduce 35
+   43 atribuicao: TK_IDENTIFIER '[' expressao ']' '=' expressao .
+   53 expressao: expressao . '+' expressao
+   54          | expressao . '-' expressao
+   55          | expressao . '*' expressao
+   56          | expressao . '/' expressao
+   57          | expressao . '%' expressao
+   58          | expressao . '>' expressao
+   59          | expressao . '<' expressao
+   61          | expressao . OPERATOR_LE expressao
+   62          | expressao . OPERATOR_GE expressao
+   63          | expressao . OPERATOR_EQ expressao
+   64          | expressao . OPERATOR_NE expressao
+   65          | expressao . OPERATOR_AND expressao
+   66          | expressao . OPERATOR_OR expressao
 
-	bloco  goto 51
-	comando  goto 148
-	controleFluxo  goto 54
-	atribuicao  goto 55
+    OPERATOR_LE   shift, and go to state 88
+    OPERATOR_GE   shift, and go to state 89
+    OPERATOR_EQ   shift, and go to state 90
+    OPERATOR_NE   shift, and go to state 91
+    OPERATOR_AND  shift, and go to state 92
+    OPERATOR_OR   shift, and go to state 93
+    '+'           shift, and go to state 94
+    '-'           shift, and go to state 95
+    '*'           shift, and go to state 96
+    '/'           shift, and go to state 97
+    '%'           shift, and go to state 98
+    '<'           shift, and go to state 99
+    '>'           shift, and go to state 100
+
+    $default  reduce using rule 43 (atribuicao)
 
 
 state 146
-	controleFluxo : KW_FOR '(' atribuicao KW_TO expressao ')' comando .  (38)
 
-	.  reduce 38
+   39 controleFluxo: KW_IF '(' expressao ')' KW_THEN comando KW_ELSE . comando
+
+    KW_IF          shift, and go to state 43
+    KW_WHILE       shift, and go to state 44
+    KW_FOR         shift, and go to state 45
+    KW_READ        shift, and go to state 46
+    KW_PRINT       shift, and go to state 47
+    KW_RETURN      shift, and go to state 48
+    TK_IDENTIFIER  shift, and go to state 49
+    '#'            shift, and go to state 50
+    '{'            shift, and go to state 36
+    '&'            shift, and go to state 51
+
+    $default  reduce using rule 35 (comando)
+
+    bloco          go to state 52
+    comando        go to state 149
+    controleFluxo  go to state 55
+    atribuicao     go to state 56
 
 
 state 147
-	fimDeArgumentos : ',' argfunc fimDeArgumentos .  (69)
 
-	.  reduce 69
+   38 controleFluxo: KW_FOR '(' atribuicao KW_TO expressao ')' comando .
+
+    $default  reduce using rule 38 (controleFluxo)
 
 
 state 148
-	controleFluxo : KW_IF '(' expressao ')' KW_THEN comando KW_ELSE comando .  (39)
 
-	.  reduce 39
+   69 fimDeArgumentos: ',' argfunc fimDeArgumentos .
 
-
-State 62 contains 1 shift/reduce conflict.
-State 141 contains 1 shift/reduce conflict.
+    $default  reduce using rule 69 (fimDeArgumentos)
 
 
-46 terminals, 23 nonterminals
-73 grammar rules, 149 states
+state 149
+
+   39 controleFluxo: KW_IF '(' expressao ')' KW_THEN comando KW_ELSE comando .
+
+    $default  reduce using rule 39 (controleFluxo)

@@ -48,4 +48,4 @@ TAC* tacReverse(TAC *last);
 void tacPrintForward(TAC* tac);
 
 
-#endif TAC_HEADER
+#endif

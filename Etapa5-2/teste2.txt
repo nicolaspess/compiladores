@@ -22,7 +22,7 @@ int main()
   for (i=1 to 10)
     print i " ";
 
-  print "fuck: \n";
+  print "texto: \n";
   read i;
   while (i<10)
     {

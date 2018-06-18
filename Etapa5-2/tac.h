@@ -43,9 +43,17 @@ typedef struct tac {
 	struct tac *next;
 } TAC;
 
+TAC* tacCreate(int type, symbol_t* res, symbol_t* op1, symbol_t* op2);
+TAC* tacJoin(TAC* t1, TAC* t2);
+TAC* tacPrintSingle(TAC* tac);
 void tacPrintBack(TAC* tac);
+void tacPrintForward(TAC *tac);
 TAC* tacReverse(TAC *last);
-void tacPrintForward(TAC* tac);
+TAC* generateCode(ASTREE* node);
+TAC* makeBinOp(int type, TAC* sonCode0, TAC* sonCode1);
+TAC* makeIfThen(TAC* sonCode0, TAC* sonCode1);
+TAC* makeIfThenElse(TAC* sonCode0, TAC* sonCode1, TAC* sonCode2);
+TAC* makeWhile(TAC* sonCode0, TAC* sonCode1);
 
 
 #endif

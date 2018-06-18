@@ -2,10 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-TAC* makeBinOp(int type, TAC* sonCode0, TAC* sonCode1);
-TAC* makeIfThen(TAC* sonCode0, TAC* sonCode1);
-TAC* makeIfThenElse(TAC* sonCode0, TAC* sonCode1, TAC* sonCode2);
-TAC* makeWhile(TAC* sonCode0, TAC* sonCode1);
+
 
 TAC* tacCreate(int type, symbol_t* res, symbol_t* op1, symbol_t* op2) {
 	TAC* newTac;
@@ -33,7 +30,7 @@ TAC* tacJoin(TAC* t1, TAC* t2) {
 }
 
 TAC* tacPrintSingle(TAC* tac) {
-	if(!tac) return;
+	if(!tac) return 0;
 	fprintf(stderr, "TAC(");
 
 	switch(tac->type) {

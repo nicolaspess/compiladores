@@ -59,6 +59,7 @@ TAC* tacPrintSingle(TAC* tac) {
 		case TAC_IFZERO:	fprintf(stderr, "TAC_IFZERO");		break;
 		case TAC_JUMP:		fprintf(stderr, "TAC_JUMP");		break;
 		case TAC_FUNC_CALL:	fprintf(stderr, "TAC_FUNC_CALL");	break;
+		case TAC_RETURN: 	fprintf(stderr, "TAC_RETURN");		break;
 
 		default:
 			fprintf(stderr, "%d",tac->type);
@@ -147,6 +148,10 @@ TAC* generateCode(ASTREE* node) {
 		case ASTREE_WHILE:			result = makeWhile(sonCode[0],sonCode[1]);	break;
 
 
+		case ASTREE_RETURN: 		result = tacJoin(sonCode[0], tacCreate(TAC_RETURN,sonCode[0]?sonCode[0]->res:0, 0, 0)); break;
+		//case ASTREE_READ: 	result = tacCreate(TAC_READ, node->symbol, 0, 0); break;
+		//case ASTREE_PRINT: result = tacCreate(TAC_PRINT, node->symbol, 0, 0); break;
+		//case ASTREE_ELEM_LIST: result = tacJoin(tacCreate(TAC_PRINTARG, sonCode[0]?sonCode[0]->res:0, 0, 0), sonCode[1]); break;
 
 		default:
 			result = tacJoin(tacJoin(tacJoin(sonCode[0],sonCode[1]),sonCode[2]),sonCode[3]);

@@ -33,6 +33,10 @@
 #define TAC_IF_THEN_ELSE	24	
 #define TAC_JUMP 		25
 #define TAC_FUNC_CALL 	26
+#define TAC_RETURN      27
+#define TAC_READ        28
+#define TAC_PRINT 		29
+#define TAC_PRINTARG    30
 
 typedef struct tac {
 	int type;

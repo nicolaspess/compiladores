@@ -1,0 +1,6 @@
+int v[2]: 1 5;
+int a = 0;
+int main(){
+	a = v[0];
+	print a "\n";
+}

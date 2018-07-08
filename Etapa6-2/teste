@@ -1,0 +1,118 @@
+// UFRGS - Compiladores - Marcelo Johann - 2017/2
+
+ 
+v: short[10];
+i: short = 10;
+b: short[10];
+a: short = 2;
+
+(long) main()
+{
+
+
+  b[3] = i;
+
+  v[5] = 2;
+
+  v[6] = b[3];
+
+  v[0] = f();
+
+
+  if(b[3] == 10) then{
+    print "b[3] == 10\n"
+  };
+
+  if(v[5] == 2) then{
+    print "v[5] == 2\n"
+  };
+
+  if(v[6] == 10) then{
+    print "v[6] == 10\n"
+  };
+
+  if(v[0] == 12) then{
+    print "v[0] == 12\n"
+  };
+
+  i = f();
+
+  if (i == 200) then{
+    print "i == 200\n";
+    a = i;
+  }
+  else{
+    print "i != 200\n";
+    i = a;
+  };
+
+  i = 0;
+  while (i < 5)
+  {
+    print "While i < 5\n";
+    i = i + 1;
+  };
+  
+}
+
+(long) f()
+{
+  return (10+a);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+a: short = 0;
+i: long = 3;
+v: byte[10] 'c' 'v' 'd'; 
+//v: long[10] 1 2 3; 
+mat: long[10]; 
+f: float = 10.55;
+c: byte = 'x';
+d: byte = 65;
+//a = 5;
+
+(long) main(r: short, g: long)
+  {
+  //l = 2;
+  a = v[3 + 2];
+  v[2] = v[10-1];
+  
+  print " Digite um numero: \n";
+  read > i;
+  while (i<10)
+    {
+    a = incn(2/3, a*7 + 4/6);
+    i = i + (2*3 + 3)
+    };
+  c = voidfunc();
+  print "Incrementado algumas vezes fica ",a,"\n";
+  if (a==5 && i == 2) then 
+    { print "Parou no meio\n"; };
+  if (a==11) then
+    ;
+  if (a==11) then {} else
+    ;
+  ;;;
+  {;};
+  {};
+  }
+
+(long) incn (x: long, n: long)
+  {return (x+n)}
+
+(short) voidfunc() {}
+  
+
+*/

@@ -1,0 +1,13 @@
+int a = 1;
+int b = 0;
+int x = 3;
+int n = 4;
+int teste(int x, int n){
+	b = x + n;
+	return b;
+}
+
+int main(){
+	a = teste(x,n);
+	print a "\n";
+}

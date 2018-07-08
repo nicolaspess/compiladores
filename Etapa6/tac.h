@@ -38,9 +38,13 @@
 #define TAC_PRINT 		29
 #define TAC_PRINTARG    30
 #define TAC_VASSIGN		31
-#define TAC_VECDEC		32
-#define TAC_DEC_VECTOR  33
-#define TAC_DEC_POINTER 34
+#define TAC_VACCESS		32
+#define TAC_VECDEC		33
+#define TAC_DEC_VECTOR  34
+#define TAC_DEC_POINTER 35
+#define TAC_ARG 		36
+#define TAC_DECVEC_VALUE 37
+#define TAC_ARGDEC		38
 
 typedef struct tac {
 	int type;
@@ -53,7 +57,7 @@ typedef struct tac {
 
 TAC* tacCreate(int type, symbol_t* res, symbol_t* op1, symbol_t* op2);
 TAC* tacJoin(TAC* t1, TAC* t2);
-TAC* tacPrintSingle(TAC* tac);
+void tacPrintSingle(TAC* tac);
 void tacPrintBack(TAC* tac);
 void tacPrintForward(TAC *tac);
 TAC* tacReverse(TAC *last);

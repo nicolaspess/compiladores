@@ -29,8 +29,9 @@ TAC* tacJoin(TAC* t1, TAC* t2) {
 	return t2;
 }
 
-TAC* tacPrintSingle(TAC* tac) {
-	if(!tac) return 0;
+void tacPrintSingle(TAC* tac) {
+	if(!tac) return;
+	if(tac->type == TAC_SYMBOL) return;
 	fprintf(stderr, "TAC(");
 
 	switch(tac->type) {
@@ -60,7 +61,17 @@ TAC* tacPrintSingle(TAC* tac) {
 		case TAC_JUMP:		fprintf(stderr, "TAC_JUMP");		break;
 		case TAC_FUNC_CALL:	fprintf(stderr, "TAC_FUNC_CALL");	break;
 		case TAC_RETURN: 	fprintf(stderr, "TAC_RETURN");		break;
-
+		case TAC_DEC_VECTOR: fprintf(stderr, "TAC_DEC_VECTOR"); break;
+		case TAC_VECDEC:	fprintf(stderr, "TAC_VECDEC");		break;
+		case TAC_DEC_POINTER: fprintf(stderr, "TAC_DEC_POINTER"); break;
+		case TAC_VASSIGN: 	fprintf(stderr, "TAC_VASSIGN"); 	break;
+		case TAC_READ:		fprintf(stderr, "TAC_READ");		break;
+		case TAC_PRINT: 	fprintf(stderr, "TAC_PRINT");		break;
+		case TAC_PRINTARG: 	fprintf(stderr, "TAC_PRINTARG");	break;
+		case TAC_ARG:		fprintf(stderr, "TAC_ARG");			break;
+		case TAC_DECVEC_VALUE: fprintf(stderr, "TAC_DECVEC_VALUE"); break;
+		case TAC_VACCESS:	fprintf(stderr, "TAC_VACCESS");		break;
+		case TAC_ARGDEC:	fprintf(stderr, "TAC_ARGDEC");		break;
 		default:
 			fprintf(stderr, "%d",tac->type);
 			break;
@@ -108,19 +119,26 @@ TAC* generateCode(ASTREE* node) {
 	for(i=0;i<MAX_CHILDREN;i++) {
 		sonCode[i] = generateCode(node->children[i]);
 	}
-
+	TAC* arg;
 	switch(node->type) {
 		case ASTREE_SYMBOL:
 			result = tacCreate(TAC_SYMBOL, node->symbol,0,0);
 			break;
 			
 		case ASTREE_DEC_VALUE:
-			result = tacJoin(sonCode[0], tacCreate(TAC_DEC_VALUE,node->symbol,sonCode[1]?sonCode[1]->res:0,0));
+			result = tacCreate(TAC_DEC_VALUE,node->symbol,sonCode[0]?sonCode[0]->res:0,0);
 			break;
 
 		case ASTREE_DEC_FUNC:
 			result = tacJoin(tacJoin(tacJoin(tacCreate(TAC_BEGIN_FUNC,node->symbol,0,0),sonCode[0]),sonCode[1]),tacCreate(TAC_END_FUNC,node->symbol,0,0));
 			break;
+		case ASTREE_PARAM_LIST:
+			result = tacJoin(sonCode[0], sonCode[1]);
+			break;
+		case ASTREE_PARAM:
+			result = tacJoin(tacJoin(sonCode[0], tacCreate(TAC_ARGDEC, node->symbol, sonCode[0]?sonCode[0]->res:0, 0)), sonCode[1]);
+			break;
+
 
 		case ASTREE_VALUE_ASSIGNMENT:
 			result = tacJoin(sonCode[0],tacCreate(TAC_VALUE_ASSIGNMENT,node->symbol,sonCode[0]?sonCode[0]->res:0,0));
@@ -143,22 +161,37 @@ TAC* generateCode(ASTREE* node) {
 
 		case ASTREE_IF_THEN:		result = makeIfThen(sonCode[0],sonCode[1]);		break;
 		case ASTREE_IF_THEN_ELSE:	result = makeIfThenElse(sonCode[0],sonCode[1],sonCode[2]);		break;
-		case ASTREE_INVOKE_FUNC:	result = tacJoin(sonCode[0],tacCreate(TAC_FUNC_CALL,node->symbol,0,0));	break;
-		case ASTREE_ARG_LIST:		result = tacJoin(sonCode[0],sonCode[1]);	break;
+		case ASTREE_INVOKE_FUNC:	
+			result = tacJoin(sonCode[0],tacCreate(TAC_FUNC_CALL,node->symbol,0,0));	
+			arg = result;
+			if(arg != NULL){
+				while(arg->prev != NULL){
+					arg = arg->prev;
+					if(arg->type == TAC_ARG)
+						arg->res = node->symbol;
+				}
+			}
+
+			break;
+		case ASTREE_ARG_LIST:		result = tacJoin(tacJoin(sonCode[0], tacCreate(TAC_ARG, 0, sonCode[0]?sonCode[0]->res:0, 0)),sonCode[1]);	break;
 		case ASTREE_WHILE:			result = makeWhile(sonCode[0],sonCode[1]);	break;
 
 		case ASTREE_RETURN: 		result = tacJoin(sonCode[0], tacCreate(TAC_RETURN,sonCode[0]?sonCode[0]->res:0, 0, 0)); break;
-		//case ASTREE_READ: 	result = tacCreate(TAC_READ, node->symbol, 0, 0); break;
-		//case ASTREE_PRINT: result = tacCreate(TAC_PRINT, node->symbol, 0, 0); break;
-		//case ASTREE_ELEM_LIST: result = tacJoin(tacCreate(TAC_PRINTARG, sonCode[0]?sonCode[0]->res:0, 0, 0), sonCode[1]); break;
+		case ASTREE_READ: 	result = tacCreate(TAC_READ, node->symbol, 0, 0); break;
+		case ASTREE_PRINT: result = tacJoin(tacCreate(TAC_PRINT, node->symbol, 0, 0), sonCode[0]); break;
+		case ASTREE_ELEM_LIST: result = tacJoin(tacCreate(TAC_PRINTARG, sonCode[0]?sonCode[0]->res:0, 0, 0), sonCode[1]); break;
 
-		case ASTREE_DEC_VECTOR: result = tacCreate(TAC_DEC_VECTOR, node->symbol, 0,0); break;
+		case ASTREE_DEC_VECTOR: result = tacCreate(TAC_DEC_VECTOR, node->symbol, sonCode[0]?sonCode[0]->res:0, 0); break;
 		
-		case ASTREE_DEC_VECTOR_INIT: result = tacJoin(sonCode[0], tacCreate(TAC_VECDEC, node->symbol, sonCode[1]?sonCode[1]->res:0, 0)); break;
-		
-		case ASTREE_DEC_POINTER: result = tacCreate(TAC_DEC_POINTER,node->symbol,0,0); break;
+		case ASTREE_DEC_VECTOR_INIT: result = tacJoin(tacCreate(TAC_VECDEC, node->symbol, sonCode[0]?sonCode[0]->res:0, 0),sonCode[1]); break;
+
+		case ASTREE_VALUE_LIST: result = tacJoin(tacCreate(TAC_DECVEC_VALUE, sonCode[0]?sonCode[0]->res:0, 0, 0), sonCode[1]); break;
+
+		case ASTREE_DEC_POINTER: result = tacCreate(TAC_DEC_POINTER,node->symbol,sonCode[0]?sonCode[0]->res:0,0); break;
 
 		case ASTREE_VECTOR_ASSIGNMENT: result = tacJoin(tacJoin(sonCode[0], sonCode[1]), tacCreate(TAC_VASSIGN, node->symbol, sonCode[0]?sonCode[0]->res:0, sonCode[1]?sonCode[1]->res:0)); break;
+
+		case ASTREE_VECTOR_ACCESS: result = tacJoin(tacCreate(TAC_VACCESS, makeTemp(), node->symbol, sonCode[0]?sonCode[0]->res:0), sonCode[1]); break;
 
 		default:
 			result = tacJoin(tacJoin(tacJoin(sonCode[0],sonCode[1]),sonCode[2]),sonCode[3]);
@@ -217,5 +250,6 @@ TAC* makeWhile(TAC* sonCode0, TAC* sonCode1) {
 	labelTacWhile = tacCreate(TAC_LABEL,labelWhile,0,0);
 	jumpTac = tacCreate(TAC_JUMP,labelWhile,0,0);
 
-	return tacJoin(tacJoin(tacJoin(tacJoin(tacJoin(labelTacWhile,sonCode0),ifTac),sonCode1),jumpTac),labelTac);
+	return tacJoin(tacJoin(tacJoin(tacJoin(tacJoin(jumpTac,labelTac),sonCode1),labelTacWhile),sonCode0),ifTac);
+	//return tacJoin(tacJoin(tacJoin(tacJoin(tacJoin(labelTacWhile,sonCode1),ifTac),sonCode0),jumpTac),labelTac);
 }

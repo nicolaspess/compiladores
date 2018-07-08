@@ -45,10 +45,10 @@
      KW_ELSE = 263,
      KW_WHILE = 264,
      KW_FOR = 265,
-     KW_READ = 266,
-     KW_PRINT = 267,
-     KW_RETURN = 268,
      KW_TO = 269,
+     KW_READ = 266,
+     KW_RETURN = 267,
+     KW_PRINT = 268,
      OPERATOR_LE = 270,
      OPERATOR_GE = 271,
      OPERATOR_EQ = 272,
@@ -58,9 +58,13 @@
      TK_IDENTIFIER = 280,
      LIT_INTEGER = 281,
      LIT_REAL = 282,
-     LIT_CHAR = 283,
-     LIT_STRING = 284,
-     TOKEN_ERROR = 290
+     LIT_CHAR = 285,
+     LIT_STRING = 286,
+     TYPEBOOL = 287,
+     TOKEN_ERROR = 290,
+     DT_CHAR = 291,
+     DT_INTEGER = 292,
+     DT_FLOAT = 293
    };
 #endif
 /* Tokens.  */
@@ -72,10 +76,10 @@
 #define KW_ELSE 263
 #define KW_WHILE 264
 #define KW_FOR 265
-#define KW_READ 266
-#define KW_PRINT 267
-#define KW_RETURN 268
 #define KW_TO 269
+#define KW_READ 266
+#define KW_RETURN 267
+#define KW_PRINT 268
 #define OPERATOR_LE 270
 #define OPERATOR_GE 271
 #define OPERATOR_EQ 272
@@ -85,9 +89,13 @@
 #define TK_IDENTIFIER 280
 #define LIT_INTEGER 281
 #define LIT_REAL 282
-#define LIT_CHAR 283
-#define LIT_STRING 284
+#define LIT_CHAR 285
+#define LIT_STRING 286
+#define TYPEBOOL 287
 #define TOKEN_ERROR 290
+#define DT_CHAR 291
+#define DT_INTEGER 292
+#define DT_FLOAT 293
 
 
 
@@ -97,15 +105,17 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 8 "parser.y"
- 
-    hash_Node *symbol;
-    AST *ast;
+#line 11 "parser.y"
+
+	symbol_t *symbol;
+	char *charValue;
+	struct ASTREE_s *node;
+	int token;
 
 
 
 /* Line 2068 of yacc.c  */
-#line 109 "y.tab.h"
+#line 119 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

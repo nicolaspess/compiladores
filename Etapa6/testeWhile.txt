@@ -2,7 +2,7 @@ int a = 1;
 int i = 3;
 int main(){
 	read i;
-	while(a < 5){
+	while(a <= 5){
 		i = i + a;
 		print i "\n";
 		a = a + 1;

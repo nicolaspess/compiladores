@@ -1,10 +1,30 @@
 	.section	.rodata
+.comm __xXxtempVarxXx123456LABEL1__, 4, 4
+.comm __xXxtempVarxXx123456LABEL0__, 4, 4
 
 .string0_label:
 	.string "\n"
 
 .LC0:
 	.string	"%d"
+
+ ## TAC_VECDEC
+	.globl	v
+	.data
+	.align 4
+	.type	v, @object
+	.size	v, 40
+v:
+	.long 1
+	.long 2
+	.long 3
+	.long 4
+	.long 5
+	.long 6
+	.long 7
+	.long 8
+	.long 9
+	.long 10
 
 ##VARDEC
 	.globl	a
@@ -13,7 +33,7 @@
 	.type	a, @object
 	.size	a, 4
 a:
-	.long	1
+	.long	0
 ##VARDEC
 	.globl	b
 	.data
@@ -22,43 +42,6 @@ a:
 	.size	b, 4
 b:
 	.long	0
-##VARDEC
-	.globl	x
-	.data
-	.align 4
-	.type	x, @object
-	.size	x, 4
-x:
-	.long	3
-##VARDEC
-	.globl	n
-	.data
-	.align 4
-	.type	n, @object
-	.size	n, 4
-n:
-	.long	4
-##BEGFUN
-	.text
-	.globl	teste
-	.type	teste, @function
-
-teste:
-	pushl	%ebp
-	movl	%esp, %ebp
-
-##ADD
-	movl x, %edx
-	movl n, %eax
-	addl %edx, %eax
-
-##ASSIGN
-	movl %eax, b
-movl b, %eax
-
-	popl	%ebp
-	ret
-
 ##BEGFUN
 	.text
 	.globl	main
@@ -68,23 +51,23 @@ main:
 	pushl	%ebp
 	movl	%esp, %ebp
 
-##ARG FUNCALL
-	movl	$0, (%esp)
+##VEC ASSIGN
+	movl $9, v+16
 
-##ARG FUNCALL
-	movl	$0, 4(%esp)
+	jmp .__xXxtempVarxXx123456LABEL1__
 
-##FUNCALL
-	movl $0, %eax
-	call teste
+.__xXxtempVarxXx123456LABEL0__:
+
+##VEC READ
+	movl	v+16, %eax
 
 ##ASSIGN
-	movl %eax, a
+	movl %eax, b
 
 ## PRINT
 	andl	$-16, %esp
 	subl	$16, %esp
-	movl	a, %edx
+	movl	b, %edx
 	movl	$.LC0, %eax
 	movl	%edx, 4(%esp)
 	movl	%eax, (%esp)
@@ -94,6 +77,22 @@ main:
 	movl $.string0_label, %eax
 	movl %eax, (%esp)
 	call printf
+
+##ADD
+	movl a, %edx
+	movl $1, %eax
+	addl %edx, %eax
+
+##ASSIGN
+	movl %eax, a
+
+.__xXxtempVarxXx123456LABEL1__:
+
+##LESS OR EQUAL
+	movl a, %edx
+	movl $9, %eax
+	cmpl %eax, %edx
+	jle .__xXxtempVarxXx123456LABEL0__
 
 	leave
 	ret
